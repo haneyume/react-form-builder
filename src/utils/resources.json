@@ -1,0 +1,82 @@
+{
+  "en": {
+    "translation": {
+      "Welcome": "Welcome",
+      "Home": "Home",
+      "Settings": "Settings",
+      "Components": "Components",
+      "Colors": "Colors",
+      "Templates": "Templates",
+      "Theme": "Theme",
+      "Color Scheme": "Color Scheme",
+      "Language": "Language",
+      "light": "light",
+      "dark": "dark",
+      "Test": "Test",
+      "Primary Color": "Primary Color",
+      "According to the system": "According to the system",
+      "Status": "Status",
+      "Version": "Version"
+    }
+  },
+  "ja": {
+    "translation": {
+      "Welcome": "ようこそ",
+      "Home": "ホーム",
+      "Settings": "セッティング",
+      "Components": "コンポネント",
+      "Colors": "カラー",
+      "Templates": "テンプレート",
+      "Theme": "テーマ",
+      "Color Scheme": "カラースキーム",
+      "Language": "言語",
+      "light": "ライト",
+      "dark": "ダーク",
+      "Test": "テスト",
+      "Primary Color": "テーマカラー",
+      "According to the system": "システムによる",
+      "Status": "ステータス",
+      "Version": "バージョン"
+    }
+  },
+  "zhHant": {
+    "translation": {
+      "Welcome": "歡迎",
+      "Home": "首頁",
+      "Settings": "設定",
+      "Components": "元件",
+      "Colors": "顏色",
+      "Templates": "樣板",
+      "Theme": "主題",
+      "Color Scheme": "配色",
+      "Language": "語言",
+      "light": "亮色",
+      "dark": "暗色",
+      "Test": "test",
+      "Primary Color": "主題色",
+      "According to the system": "根據系統",
+      "Status": "狀態",
+      "Version": "版本"
+    }
+  },
+  "zhHans": {
+    "translation": {
+      "Welcome": "欢迎",
+      "Home": "首页",
+      "Settings": "设定",
+      "Components": "元件",
+      "Colors": "颜色",
+      "Templates": "样板",
+      "Theme": "主题",
+      "Color Scheme": "配色",
+      "Language": "语言",
+      "light": "亮色",
+      "dark": "暗色",
+      "Test": "test",
+      "Primary Color": "主题色",
+      "According to the system": "根据系统",
+      "Status": "状态",
+      "Version": "版本"
+    }
+  }
+}
