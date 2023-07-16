@@ -1,13 +1,18 @@
-import { useTranslation } from 'react-i18next';
+// @ts-ignore
+import { Allotment } from 'allotment';
 
-import { Stack, Title } from '@mantine/core';
+import { EditorSidebar } from '../sections';
 
 export const HomePage = () => {
-  const { t } = useTranslation();
-
   return (
-    <Stack>
-      <Title>{t('Welcome')}</Title>
-    </Stack>
+    <Allotment>
+      <Allotment.Pane preferredSize={250}>
+        <EditorSidebar />
+      </Allotment.Pane>
+
+      <Allotment.Pane>
+        <div />
+      </Allotment.Pane>
+    </Allotment>
   );
 };

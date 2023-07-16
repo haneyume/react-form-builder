@@ -1,5 +1,8 @@
 import { useState, ReactNode, createContext } from 'react';
 
+import type { DNDTreeFormFieldItem } from '../types';
+import { defaultFormFieldItems } from '../types';
+
 export interface AppContextProps {
   initialized: boolean;
   setInitialized: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +18,11 @@ export interface AppContextProps {
 
   themes: Array<{ label: string; value: string }>;
   languages: Array<{ label: string; value: string }>;
+
+  formFieldItems: DNDTreeFormFieldItem[];
+  setFormFieldItems: React.Dispatch<
+    React.SetStateAction<DNDTreeFormFieldItem[]>
+  >;
 }
 
 export const AppContext = createContext<AppContextProps>(undefined!);
@@ -28,6 +36,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<string>('Ready');
   const [userId, setUserId] = useState<string>('');
+
+  const [formFieldItems, setFormFieldItems] = useState<DNDTreeFormFieldItem[]>(
+    defaultFormFieldItems(),
+  );
 
   return (
     <AppContext.Provider
@@ -55,6 +67,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
           { label: '繁體中文', value: 'zhHant' },
           { label: '简体中文', value: 'zhHans' },
         ],
+
+        formFieldItems,
+        setFormFieldItems,
       }}
     >
       {children}

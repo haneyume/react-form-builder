@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Navbar, NavLink, Badge, Stack, Tooltip } from '@mantine/core';
-import { IconHome, IconSettings } from '@tabler/icons-react';
+import { IconHome, IconCode, IconSettings } from '@tabler/icons-react';
 
 export const AppNavbar = () => {
   const navigate = useNavigate();
@@ -16,6 +16,12 @@ export const AppNavbar = () => {
       notifications: 0,
     },
     {
+      icon: IconCode,
+      label: 'Code',
+      path: '/code',
+      notifications: 0,
+    },
+    {
       icon: IconSettings,
       label: 'Settings',
       path: '/settings',
@@ -24,7 +30,7 @@ export const AppNavbar = () => {
   ];
 
   return (
-    <Navbar width={{ base: 250 }}>
+    <Navbar width={{ base: 50 }}>
       <Navbar.Section>
         <Stack className="my-5" spacing={5}>
           {links.map((link, index) => {
