@@ -12,7 +12,7 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
       header={<AppHeader />}
       navbar={<AppNavbar />}
       footer={<AppFooter />}
-      // padding={0}
+      padding={0}
     >
       {children}
     </AppShell>

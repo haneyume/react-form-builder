@@ -23,6 +23,9 @@ export interface AppContextProps {
   setFormFieldItems: React.Dispatch<
     React.SetStateAction<DNDTreeFormFieldItem[]>
   >;
+
+  selectedFormFieldId: string;
+  setSelectedFormFieldId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const AppContext = createContext<AppContextProps>(undefined!);
@@ -40,6 +43,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [formFieldItems, setFormFieldItems] = useState<DNDTreeFormFieldItem[]>(
     defaultFormFieldItems(),
   );
+
+  const [selectedFormFieldId, setSelectedFormFieldId] = useState<string>('');
 
   return (
     <AppContext.Provider
@@ -70,6 +75,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         formFieldItems,
         setFormFieldItems,
+
+        selectedFormFieldId,
+        setSelectedFormFieldId,
       }}
     >
       {children}

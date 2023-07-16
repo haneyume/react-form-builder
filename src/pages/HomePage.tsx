@@ -1,7 +1,11 @@
 // @ts-ignore
 import { Allotment } from 'allotment';
 
-import { EditorSidebar } from '../sections';
+import {
+  EditorSidebar,
+  EditorPreview,
+  EditorPropertyEditor,
+} from '../sections';
 
 export const HomePage = () => {
   return (
@@ -11,7 +15,11 @@ export const HomePage = () => {
       </Allotment.Pane>
 
       <Allotment.Pane>
-        <div />
+        <EditorPreview />
+      </Allotment.Pane>
+
+      <Allotment.Pane preferredSize={250}>
+        <EditorPropertyEditor />
       </Allotment.Pane>
     </Allotment>
   );
