@@ -1,4 +1,4 @@
-import { useState, ReactNode, createContext } from 'react';
+import { useState, useMemo, ReactNode, createContext } from 'react';
 
 import type { DNDTreeFormFieldItem } from '../types';
 import { defaultFormFieldItems } from '../types';
@@ -26,6 +26,8 @@ export interface AppContextProps {
 
   selectedFormFieldId: string;
   setSelectedFormFieldId: React.Dispatch<React.SetStateAction<string>>;
+
+  currentFormFieldItem: DNDTreeFormFieldItem | undefined;
 }
 
 export const AppContext = createContext<AppContextProps>(undefined!);
@@ -45,6 +47,16 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   );
 
   const [selectedFormFieldId, setSelectedFormFieldId] = useState<string>('');
+
+  const currentFormFieldItem = useMemo(() => {
+    if (selectedFormFieldId) {
+      const selected = formFieldItems.find(
+        (item) => item.id === selectedFormFieldId,
+      );
+
+      return selected;
+    }
+  }, [selectedFormFieldId]);
 
   return (
     <AppContext.Provider
@@ -78,6 +90,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         selectedFormFieldId,
         setSelectedFormFieldId,
+
+        currentFormFieldItem,
       }}
     >
       {children}
