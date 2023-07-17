@@ -19,7 +19,7 @@ export const AppHeader = () => {
         </UnstyledButton>
 
         <UnstyledButton onClick={() => navigate('/')}>
-          <Title order={3}>react-form-builder</Title>
+          <Title order={3}>Form Builder</Title>
         </UnstyledButton>
 
         <div className="flex-1" />

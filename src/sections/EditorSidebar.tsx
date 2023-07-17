@@ -1,18 +1,21 @@
 import { useContext, useRef, useEffect } from 'react';
 
-import { Stack } from '@mantine/core';
+import { Group, Stack } from '@mantine/core';
 import {
   IconCaretRight,
   IconCaretDown,
   IconFolder,
-  IconFileCode,
+  IconForms,
 } from '@tabler/icons-react';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 
+import clsx from 'clsx';
+
 import { AppContext } from '../contexts';
+import { NewFormFieldButton } from '../modals';
 
 export const EditorSidebar = () => {
   const projectCtx = useContext(AppContext);
@@ -28,7 +31,9 @@ export const EditorSidebar = () => {
   };
 
   return (
-    <Stack>
+    <Stack spacing={0}>
+      <SidebarHeader />
+
       <DndProvider backend={HTML5Backend}>
         <Tree
           ref={treeRef}
@@ -50,12 +55,17 @@ export const EditorSidebar = () => {
           )}
           render={(node, { depth, isOpen, onToggle }) => (
             <div
-              className="flex items-center space-x-2 cursor-pointer hover:bg-gray-800"
-              style={{ paddingLeft: depth * 20 }}
+              className={clsx(
+                'flex items-center space-x-2 cursor-pointer hover:bg-gray-800',
+                projectCtx.selectedFormFieldId === node.id && 'bg-gray-700',
+              )}
+              style={{ paddingLeft: 10 + depth * 20 }}
               onClick={() => {
                 if (node.droppable) {
                   onToggle();
                 }
+
+                projectCtx.setSelectedFormFieldId(node.id as string);
               }}
             >
               {node.droppable && isOpen && <IconCaretDown size={14} />}
@@ -64,7 +74,7 @@ export const EditorSidebar = () => {
               {node.droppable ? (
                 <IconFolder size={14} />
               ) : (
-                <IconFileCode size={14} />
+                <IconForms size={14} />
               )}
 
               <div>{node.text}</div>
@@ -73,5 +83,13 @@ export const EditorSidebar = () => {
         />
       </DndProvider>
     </Stack>
+  );
+};
+
+const SidebarHeader = () => {
+  return (
+    <Group position="right">
+      <NewFormFieldButton />
+    </Group>
   );
 };
