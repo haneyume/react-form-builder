@@ -1,11 +1,13 @@
 import { useContext, useRef, useEffect } from 'react';
 
-import { Group, Stack } from '@mantine/core';
+import { Group, Stack, ActionIcon } from '@mantine/core';
 import {
   IconCaretRight,
   IconCaretDown,
   IconFolder,
   IconForms,
+  IconArrowAutofitRight,
+  IconArrowAutofitDown,
 } from '@tabler/icons-react';
 
 import { DndProvider } from 'react-dnd';
@@ -88,8 +90,16 @@ export const EditorSidebar = () => {
 
 const SidebarHeader = () => {
   return (
-    <Group position="right">
+    <Group position="right" spacing={5}>
       <NewFormFieldButton />
+
+      <ActionIcon>
+        <IconArrowAutofitRight size={18} />
+      </ActionIcon>
+
+      <ActionIcon>
+        <IconArrowAutofitDown size={18} />
+      </ActionIcon>
     </Group>
   );
 };

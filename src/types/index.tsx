@@ -5,17 +5,19 @@ interface DNDTreeItem<T> {
   parent: string;
   text: string;
   droppable?: boolean;
-  data?: T;
+  data: T;
 }
 
 // ----------------------------------------------
 
 interface FormFieldItem {
-  name: string;
   type: string;
-  required: boolean;
-  label: string;
-  placeholder: string;
+  name?: string;
+  required?: boolean;
+  label?: string;
+  placeholder?: string;
+  readonly?: boolean;
+  disabled?: boolean;
 }
 
 type DNDTreeFormFieldItem = DNDTreeItem<FormFieldItem>;
@@ -23,6 +25,8 @@ type DNDTreeFormFieldItem = DNDTreeItem<FormFieldItem>;
 // ----------------------------------------------
 
 export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
+  const idForRow = uuidv4();
+
   return [
     {
       id: uuidv4(),
@@ -30,8 +34,8 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       text: 'username',
       droppable: false,
       data: {
-        name: 'username',
         type: 'text',
+        name: 'username',
         required: true,
         label: 'Username',
         placeholder: 'Enter your username',
@@ -43,11 +47,42 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       text: 'password',
       droppable: false,
       data: {
-        name: 'password',
         type: 'password',
+        name: 'password',
         required: true,
         label: 'Password',
         placeholder: 'Enter your password',
+      },
+    },
+    {
+      id: idForRow,
+      parent: 'root',
+      text: 'Row',
+      droppable: true,
+      data: {
+        type: 'row',
+      },
+    },
+    {
+      id: uuidv4(),
+      parent: idForRow,
+      text: 'Button',
+      droppable: false,
+      data: {
+        type: 'button',
+        name: 'button',
+        label: 'Cancel',
+      },
+    },
+    {
+      id: uuidv4(),
+      parent: idForRow,
+      text: 'Button',
+      droppable: false,
+      data: {
+        type: 'button',
+        name: 'button',
+        label: 'Submit',
       },
     },
   ];

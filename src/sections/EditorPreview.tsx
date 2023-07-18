@@ -9,6 +9,8 @@ import {
   Slider,
   Select,
   Textarea,
+  Group,
+  Button,
 } from '@mantine/core';
 
 import { AppContext } from '../contexts';
@@ -21,9 +23,11 @@ export const EditorPreview = () => {
     <div className="w-full h-full bg-pattern flex justify-center p-10">
       <Paper className="w-1/2 p-5">
         <Stack>
-          {projectCtx.formFieldItems.map((item, index) => {
-            return <RenderField key={index} item={item} />;
-          })}
+          {projectCtx.formFieldItems
+            .filter((item) => item.parent === 'root')
+            .map((item, index) => {
+              return <RenderField key={index} item={item} />;
+            })}
         </Stack>
       </Paper>
     </div>
@@ -31,9 +35,13 @@ export const EditorPreview = () => {
 };
 
 const RenderField = ({ item }: { item: DNDTreeFormFieldItem }) => {
-  if (!item.data) {
-    return null;
-  }
+  const projectCtx = useContext(AppContext);
+
+  const uuid = item.id;
+
+  const childrenEls = projectCtx.formFieldItems.filter(
+    (child) => child.parent === uuid,
+  );
 
   switch (item.data.type) {
     case 'text':
@@ -75,6 +83,24 @@ const RenderField = ({ item }: { item: DNDTreeFormFieldItem }) => {
           withAsterisk={item.data.required}
         />
       );
+    case 'row':
+      return (
+        <Group position="right">
+          {childrenEls.map((child) => (
+            <RenderField key={child.id} item={child} />
+          ))}
+        </Group>
+      );
+    case 'col':
+      return (
+        <Stack>
+          {childrenEls.map((child) => (
+            <RenderField key={child.id} item={child} />
+          ))}
+        </Stack>
+      );
+    case 'button':
+      return <Button variant="light">{item.data.label}</Button>;
     default:
       return <div />;
   }
