@@ -1,8 +1,15 @@
 import { useContext } from 'react';
 
-import { Modal, Stack, Button, TextInput, ActionIcon } from '@mantine/core';
+import {
+  Modal,
+  Stack,
+  Button,
+  TextInput,
+  ActionIcon,
+  Tooltip,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconFilePlus } from '@tabler/icons-react';
+import { IconListDetails } from '@tabler/icons-react';
 
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,9 +21,11 @@ export const NewFormFieldButton = () => {
 
   return (
     <>
-      <ActionIcon onClick={open}>
-        <IconFilePlus size={18} />
-      </ActionIcon>
+      <Tooltip label="Add a form field">
+        <ActionIcon onClick={open}>
+          <IconListDetails size={18} />
+        </ActionIcon>
+      </Tooltip>
 
       <ModalInstance opened={opened} close={close} />
     </>

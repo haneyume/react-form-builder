@@ -1,13 +1,12 @@
 import { useContext, useRef, useEffect } from 'react';
 
-import { Group, Stack, ActionIcon } from '@mantine/core';
+import { Group, Stack, ActionIcon, Tooltip } from '@mantine/core';
 import {
   IconCaretRight,
   IconCaretDown,
   IconFolder,
   IconForms,
-  IconArrowAutofitRight,
-  IconArrowAutofitDown,
+  IconLayoutBoard,
 } from '@tabler/icons-react';
 
 import { DndProvider } from 'react-dnd';
@@ -93,13 +92,11 @@ const SidebarHeader = () => {
     <Group position="right" spacing={5}>
       <NewFormFieldButton />
 
-      <ActionIcon>
-        <IconArrowAutofitRight size={18} />
-      </ActionIcon>
-
-      <ActionIcon>
-        <IconArrowAutofitDown size={18} />
-      </ActionIcon>
+      <Tooltip label="Add a row / column">
+        <ActionIcon>
+          <IconLayoutBoard size={18} />
+        </ActionIcon>
+      </Tooltip>
     </Group>
   );
 };
