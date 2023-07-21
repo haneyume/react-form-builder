@@ -28,6 +28,7 @@
     "i18next": "^23.2.8",
     "jszip": "^3.10.1",
     "numbro": "^2.3.6",
+    "prettier": "^3.0.0",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

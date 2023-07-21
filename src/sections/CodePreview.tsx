@@ -2,6 +2,12 @@ import { useContext, useEffect, useState } from 'react';
 
 import Editor from '@monaco-editor/react';
 
+import prettier from 'prettier/standalone';
+import prettierPluginBabel from 'prettier/plugins/babel';
+
+// @ts-ignore
+import prettierPluginEstree from 'prettier/plugins/estree';
+
 import { AppContext } from '../contexts';
 import type { DNDTreeFormFieldItem } from '../types';
 
@@ -20,7 +26,14 @@ export const CodePreview = () => {
 
     _code = genComponentCode(_code);
 
-    setCode(_code);
+    prettier
+      .format(_code, {
+        parser: 'babel',
+        plugins: [prettierPluginBabel, prettierPluginEstree],
+      })
+      .then((formattedCode) => {
+        setCode(formattedCode);
+      });
   }, []);
 
   return (
