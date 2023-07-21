@@ -2,7 +2,13 @@ import { useRoutes } from 'react-router-dom';
 
 import { AppProvider } from './contexts';
 import { AppLayout } from './layouts';
-import { HomePage, CodePage, SettingsPage, NotFoundPage } from './pages';
+import {
+  HomePage,
+  CodePage,
+  SettingsPage,
+  NotFoundPage,
+  TestPage,
+} from './pages';
 
 export const AppRoutes = () => {
   const routes = useRoutes([
@@ -17,6 +23,10 @@ export const AppRoutes = () => {
     {
       path: '/settings',
       element: <SettingsPage />,
+    },
+    {
+      path: '/test',
+      element: <TestPage />,
     },
     {
       path: '/*',

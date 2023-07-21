@@ -3,3 +3,5 @@ export { CodePage } from './CodePage';
 export { SettingsPage } from './SettingsPage';
 
 export { NotFoundPage } from './NotFoundPage';
+
+export { TestPage } from './TestPage';

@@ -41,9 +41,15 @@ export const CodePreview = () => {
       height="100%"
       theme="vs-dark"
       defaultLanguage="typescript"
-      defaultValue="// some comment"
+      // defaultValue="// some comment"
       options={{}}
       value={code}
+      beforeMount={(monaco) => {
+        monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+          noSemanticValidation: true,
+          noSyntaxValidation: true,
+        });
+      }}
     />
   );
 };

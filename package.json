@@ -13,6 +13,7 @@
     "@emotion/react": "^11.11.1",
     "@mantine/carousel": "^6.0.16",
     "@mantine/core": "^6.0.16",
+    "@mantine/form": "^6.0.17",
     "@mantine/hooks": "^6.0.16",
     "@mantine/modals": "^6.0.16",
     "@mantine/notifications": "^6.0.16",
@@ -30,6 +31,7 @@
     "numbro": "^2.3.6",
     "prettier": "^3.0.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
@@ -42,6 +44,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@types/react": "^18.2.14",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-dom": "^18.2.6",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
