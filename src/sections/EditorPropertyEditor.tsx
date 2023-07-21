@@ -12,59 +12,65 @@ import {
 import { AppContext } from '../contexts';
 
 export const EditorPropertyEditor = () => {
+  const defaultValue = [
+    'formfield_general',
+    'layout_general',
+    'select',
+    'textarea',
+    'button',
+  ];
+
   return (
     <ScrollArea className="h-full">
       <Stack>
-        <Accordion
-          defaultValue={['general', 'select', 'textarea']}
-          chevronPosition="left"
-          multiple
-        >
-          <GeneralPanel />
+        <Accordion defaultValue={defaultValue} chevronPosition="left" multiple>
+          <FormFieldGeneralPanel />
+          <LayoutGeneralPanel />
           <SelectPanel />
           <TextareaPanel />
+          <ButtonPanel />
         </Accordion>
       </Stack>
     </ScrollArea>
   );
 };
 
-const GeneralPanel = () => {
+const FormFieldGeneralPanel = () => {
   const projectCtx = useContext(AppContext);
 
-  const onChange = (
-    id: string,
-    data: {
-      name?: string;
-      type?: string;
-      required?: boolean;
-      label?: string;
-      placeholder?: string;
-    },
-  ) => {
-    projectCtx.setFormFieldItems((prev) => {
-      const index = prev.findIndex((item) => item.id === id);
-      if (index === -1) {
-        return prev;
-      }
+  // const types_ = [
+  //   'text',
+  //   'number',
+  //   'password',
+  //   'checkbox',
+  //   'radio',
+  //   'date',
+  //   'time',
+  //   'file',
+  //   'range',
+  //   'color',
+  //   'select',
+  //   'textarea',
+  // ];
 
-      const updated = [...prev];
-      updated[index].data = {
-        ...updated[index].data,
-        ...data,
-      } as any;
-
-      return updated;
-    });
-  };
+  const types = [
+    'text',
+    'password',
+    'checkbox',
+    'select',
+    'textarea',
+    'button',
+  ];
 
   const current = projectCtx.currentFormFieldItem;
   if (!current) {
     return null;
+  } else if (!types.includes(current.data?.type || '')) {
+    return null;
   }
 
   return (
-    <Accordion.Item value="general">
+    <Accordion.Item value="formfield_general">
       <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -72,43 +78,69 @@ const GeneralPanel = () => {
 
           <Select
             label="Type"
-            data={[
-              'text',
-              'number',
-              'password',
-              'checkbox',
-              'radio',
-              'date',
-              'time',
-              'file',
-              'range',
-              'color',
-              'select',
-              'textarea',
-            ]}
+            data={types}
             value={current.data?.type}
-            onChange={(value) => onChange(current.id, { type: value! })}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, { type: value! })
+            }
           />
 
           <Checkbox
             label="Required"
             checked={current.data?.required}
             onChange={(e) =>
-              onChange(current.id, { required: e.target.checked })
+              projectCtx.setSingleItem(current.id, {
+                required: e.target.checked,
+              })
             }
           />
 
           <TextInput
             label="Label"
             value={current.data?.label}
-            onChange={(e) => onChange(current.id, { label: e.target.value })}
+            onChange={(e) =>
+              projectCtx.setSingleItem(current.id, { label: e.target.value })
+            }
           />
 
           <TextInput
             label="Placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
-              onChange(current.id, { placeholder: e.target.value })
+              projectCtx.setSingleItem(current.id, {
+                placeholder: e.target.value,
+              })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const LayoutGeneralPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const types = ['row', 'column'];
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (!types.includes(current.data?.type || '')) {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="layout_general">
+      <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <Select
+            label="Type"
+            data={types}
+            value={current.data?.type}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, { type: value! })
             }
           />
         </Stack>
@@ -121,7 +153,9 @@ const SelectPanel = () => {
   const projectCtx = useContext(AppContext);
 
   const current = projectCtx.currentFormFieldItem;
-  if (!current || current.data?.type !== 'select') {
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'select') {
     return null;
   }
 
@@ -147,13 +181,43 @@ const TextareaPanel = () => {
   const projectCtx = useContext(AppContext);
 
   const current = projectCtx.currentFormFieldItem;
-  if (!current || current.data?.type !== 'textarea') {
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'textarea') {
     return null;
   }
 
   return (
     <Accordion.Item value="textarea">
       <Accordion.Control className="bg-neutral-800">Textarea</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <TextInput label="name" />
+
+          <Checkbox label="required" />
+
+          <TextInput label="label" />
+
+          <TextInput label="placeholder" />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const ButtonPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'button') {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="button">
+      <Accordion.Control className="bg-neutral-800">Button</Accordion.Control>
       <Accordion.Panel>
         <Stack>
           <TextInput label="name" />

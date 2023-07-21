@@ -1,12 +1,16 @@
 import { useContext, useRef, useEffect } from 'react';
 
-import { Group, Stack, ActionIcon, Tooltip } from '@mantine/core';
+import { Group, Stack } from '@mantine/core';
 import {
   IconCaretRight,
   IconCaretDown,
-  IconFolder,
   IconForms,
-  IconLayoutBoard,
+  IconCheckbox,
+  IconSelect,
+  IconAlignBoxLeftTop,
+  IconHandClick,
+  IconLayoutRows,
+  IconLayoutColumns,
 } from '@tabler/icons-react';
 
 import { DndProvider } from 'react-dnd';
@@ -16,7 +20,7 @@ import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 import clsx from 'clsx';
 
 import { AppContext } from '../contexts';
-import { NewFormFieldButton } from '../modals';
+import { NewFormFieldButton, NewLayoutButton } from '../modals';
 
 export const EditorSidebar = () => {
   const projectCtx = useContext(AppContext);
@@ -29,6 +33,28 @@ export const EditorSidebar = () => {
 
   const handleDrop = (newTreeData: any) => {
     projectCtx.setFormFieldItems(newTreeData);
+  };
+
+  const renderIcon = (type: string) => {
+    switch (type) {
+      case 'text':
+      case 'password':
+        return <IconForms size={14} />;
+      case 'checkbox':
+        return <IconCheckbox size={14} />;
+      case 'select':
+        return <IconSelect size={14} />;
+      case 'textarea':
+        return <IconAlignBoxLeftTop size={14} />;
+      case 'button':
+        return <IconHandClick size={14} />;
+      case 'row':
+        return <IconLayoutRows size={14} />;
+      case 'column':
+        return <IconLayoutColumns size={14} />;
+      default:
+        return <IconForms size={14} />;
+    }
   };
 
   return (
@@ -72,11 +98,7 @@ export const EditorSidebar = () => {
               {node.droppable && isOpen && <IconCaretDown size={14} />}
               {node.droppable && !isOpen && <IconCaretRight size={14} />}
 
-              {node.droppable ? (
-                <IconFolder size={14} />
-              ) : (
-                <IconForms size={14} />
-              )}
+              {renderIcon(node.data?.type || '')}
 
               <div>{node.text}</div>
             </div>
@@ -91,12 +113,7 @@ const SidebarHeader = () => {
   return (
     <Group position="right" spacing={5}>
       <NewFormFieldButton />
-
-      <Tooltip label="Add a row / column">
-        <ActionIcon>
-          <IconLayoutBoard size={18} />
-        </ActionIcon>
-      </Tooltip>
+      <NewLayoutButton />
     </Group>
   );
 };

@@ -5,7 +5,7 @@ interface DNDTreeItem<T> {
   parent: string;
   text: string;
   droppable?: boolean;
-  data: T;
+  data?: T;
 }
 
 // ----------------------------------------------
@@ -57,7 +57,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
     {
       id: idForRow,
       parent: 'root',
-      text: 'Row',
+      text: 'row',
       droppable: true,
       data: {
         type: 'row',
@@ -66,22 +66,22 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
     {
       id: uuidv4(),
       parent: idForRow,
-      text: 'Button',
+      text: 'cancel',
       droppable: false,
       data: {
         type: 'button',
-        name: 'button',
+        name: 'cancel',
         label: 'Cancel',
       },
     },
     {
       id: uuidv4(),
       parent: idForRow,
-      text: 'Button',
+      text: 'submit',
       droppable: false,
       data: {
         type: 'button',
-        name: 'button',
+        name: 'submit',
         label: 'Submit',
       },
     },

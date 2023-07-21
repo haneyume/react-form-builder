@@ -25,8 +25,14 @@ export const EditorPreview = () => {
         <Stack>
           {projectCtx.formFieldItems
             .filter((item) => item.parent === 'root')
-            .map((item, index) => {
-              return <RenderField key={index} item={item} />;
+            .map((item) => {
+              return (
+                <RenderField
+                  key={item.id}
+                  item={item}
+                  allItems={projectCtx.formFieldItems}
+                />
+              );
             })}
         </Stack>
       </Paper>
@@ -34,16 +40,17 @@ export const EditorPreview = () => {
   );
 };
 
-const RenderField = ({ item }: { item: DNDTreeFormFieldItem }) => {
-  const projectCtx = useContext(AppContext);
-
+const RenderField = ({
+  item,
+  allItems,
+}: {
+  item: DNDTreeFormFieldItem;
+  allItems: DNDTreeFormFieldItem[];
+}) => {
   const uuid = item.id;
+  const children = allItems.filter((child) => child.parent === uuid);
 
-  const childrenEls = projectCtx.formFieldItems.filter(
-    (child) => child.parent === uuid,
-  );
-
-  switch (item.data.type) {
+  switch (item.data?.type) {
     case 'text':
       return (
         <TextInput
@@ -83,24 +90,24 @@ const RenderField = ({ item }: { item: DNDTreeFormFieldItem }) => {
           withAsterisk={item.data.required}
         />
       );
+    case 'button':
+      return <Button variant="light">{item.data.label}</Button>;
     case 'row':
       return (
         <Group position="right">
-          {childrenEls.map((child) => (
-            <RenderField key={child.id} item={child} />
+          {children.map((child) => (
+            <RenderField key={child.id} item={child} allItems={allItems} />
           ))}
         </Group>
       );
-    case 'col':
+    case 'column':
       return (
         <Stack>
-          {childrenEls.map((child) => (
-            <RenderField key={child.id} item={child} />
+          {children.map((child) => (
+            <RenderField key={child.id} item={child} allItems={allItems} />
           ))}
         </Stack>
       );
-    case 'button':
-      return <Button variant="light">{item.data.label}</Button>;
     default:
       return <div />;
   }

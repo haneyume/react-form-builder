@@ -1,6 +1,6 @@
 import { useState, useMemo, ReactNode, createContext } from 'react';
 
-import type { DNDTreeFormFieldItem } from '../types';
+import type { DNDTreeFormFieldItem, FormFieldItem } from '../types';
 import { defaultFormFieldItems } from '../types';
 
 export interface AppContextProps {
@@ -28,6 +28,8 @@ export interface AppContextProps {
   setSelectedFormFieldId: React.Dispatch<React.SetStateAction<string>>;
 
   currentFormFieldItem: DNDTreeFormFieldItem | undefined;
+
+  setSingleItem: (id: string, data: Partial<FormFieldItem>) => void;
 }
 
 export const AppContext = createContext<AppContextProps>(undefined!);
@@ -57,6 +59,23 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       return selected;
     }
   }, [selectedFormFieldId]);
+
+  const setSingleItem = (id: string, data: Partial<FormFieldItem>) => {
+    setFormFieldItems((prev) => {
+      const index = prev.findIndex((item) => item.id === id);
+      if (index === -1) {
+        return prev;
+      }
+
+      const updated = [...prev];
+      updated[index].data = {
+        ...updated[index].data,
+        ...data,
+      } as any;
+
+      return updated;
+    });
+  };
 
   return (
     <AppContext.Provider
@@ -92,6 +111,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setSelectedFormFieldId,
 
         currentFormFieldItem,
+
+        setSingleItem,
       }}
     >
       {children}

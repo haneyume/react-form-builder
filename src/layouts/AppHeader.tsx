@@ -5,7 +5,7 @@ import { Header, Title, UnstyledButton } from '@mantine/core';
 import { IconBrandReact } from '@tabler/icons-react';
 
 // import { AppContext } from '../contexts';
-import { ThemeButton, UserButton } from '../buttons';
+// import { ThemeButton, UserButton } from '../buttons';
 
 export const AppHeader = () => {
   // const appCtx = useContext(AppContext);
@@ -24,13 +24,13 @@ export const AppHeader = () => {
 
         <div className="flex-1" />
 
-        <ThemeButton />
+        {/* <ThemeButton />
 
         <UserButton
           name={'User'}
           email={'user@test.com'}
           onClick={() => navigate('/profile')}
-        />
+        /> */}
       </div>
     </Header>
   );
