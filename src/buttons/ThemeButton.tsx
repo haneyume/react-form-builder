@@ -15,4 +15,6 @@ export const ThemeButton = () => {
       {dark ? <IconSun size="1.2rem" /> : <IconMoonStars size="1.2rem" />}
     </ActionIcon>
   );
+
+  //
 };
