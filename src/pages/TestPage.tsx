@@ -1,31 +1,42 @@
 import {
   TextInput,
   NumberInput,
+  PasswordInput,
   Checkbox,
   Select,
   Textarea,
+  Slider,
+  ColorInput,
+  Radio,
+  Switch,
   Button,
   Group,
   Stack,
   Box,
   Text,
 } from '@mantine/core';
-import { useForm, isEmail, isNotEmpty, isInRange } from '@mantine/form';
+import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
 
 export const TestPage = () => {
   const form = useForm({
     initialValues: {
+      text: '',
+      number: 0,
+      password: '',
       email: '',
-      termsOfService: false,
-      age: 0,
-      about: 'dsd',
+      checkbox: false,
+      select: 'opt1',
+      textarea: '',
+      range: 0,
+      color: '#ffffff',
+      radio: '',
+      switch: false,
+      checkboxGroup: [],
     },
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      age: isInRange(
-        { min: 18, max: 99 },
-        'You must be 18-99 years old to register',
-      ),
+      text: isNotEmpty('Field is required'),
+      email: isEmail('Invalid email'),
+      number: isInRange({ min: 1, max: 3 }, '1~3'),
     },
   });
 
@@ -34,39 +45,92 @@ export const TestPage = () => {
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <Stack>
           <TextInput
-            // withAsterisk
-            label="Email"
-            placeholder="your@email.com"
-            {...form.getInputProps('emaidl')}
-          />
-
-          <Select
-            label="Select your favorite color"
-            placeholder="Pick color"
-            data={[
-              { value: 'blue', label: 'Blue' },
-              { value: 'green', label: 'Green' },
-              { value: 'red', label: 'Red' },
-            ]}
-            {...form.getInputProps('color')}
+            label="text"
+            placeholder="text"
+            {...form.getInputProps('text')}
           />
 
           <NumberInput
-            label="Age"
-            placeholder="Age"
-            {...form.getInputProps('age')}
+            label="number"
+            placeholder="number"
+            {...form.getInputProps('number')}
           />
 
-          <Textarea
-            label="Tell us about yourself"
-            placeholder="I am..."
-            {...form.getInputProps('about')}
+          <PasswordInput
+            label="password"
+            placeholder="password"
+            {...form.getInputProps('password')}
+          />
+
+          <TextInput
+            withAsterisk
+            label="email"
+            placeholder="email"
+            {...form.getInputProps('email')}
           />
 
           <Checkbox
-            label="I agree to sell my privacy"
-            {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+            label="checkbox"
+            {...form.getInputProps('checkbox', { type: 'checkbox' })}
           />
+
+          <Select
+            label="select"
+            placeholder="select"
+            data={[
+              { value: 'opt1', label: 'opt1' },
+              { value: 'opt2', label: 'opt2' },
+              { value: 'opt3', label: 'opt3' },
+            ]}
+            {...form.getInputProps('select')}
+          />
+
+          <Textarea
+            label="textarea"
+            placeholder="textarea"
+            {...form.getInputProps('textarea')}
+          />
+
+          <Slider label="range" {...form.getInputProps('range')} />
+
+          <ColorInput
+            label="color"
+            placeholder="color"
+            {...form.getInputProps('color')}
+          />
+
+          <Radio.Group
+            label="radio"
+            description="radio"
+            withAsterisk
+            {...form.getInputProps('radio')}
+          >
+            <Group mt="xs">
+              <Radio value="react" label="React" />
+              <Radio value="svelte" label="Svelte" />
+              <Radio value="ng" label="Angular" />
+              <Radio value="vue" label="Vue" />
+            </Group>
+          </Radio.Group>
+
+          <Switch
+            label="switch"
+            {...form.getInputProps('switch', { type: 'checkbox' })}
+          />
+
+          <Checkbox.Group
+            label="checkboxGroup"
+            description="checkboxGroup"
+            withAsterisk
+            {...form.getInputProps('checkboxGroup')}
+          >
+            <Group mt="xs">
+              <Checkbox value="react" label="React" />
+              <Checkbox value="svelte" label="Svelte" />
+              <Checkbox value="ng" label="Angular" />
+              <Checkbox value="vue" label="Vue" />
+            </Group>
+          </Checkbox.Group>
 
           <Group position="right">
             <Button type="submit">Submit</Button>

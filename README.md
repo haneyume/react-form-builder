@@ -2,15 +2,19 @@
 
 ## Supported Form Fields
 
-| FormField |     |     |
-| --------- | --- | --- |
-| text      | ✓   |     |
-| number    |     |     |
-| password  | ✓   |     |
-| checkbox  | ✓   |     |
-| select    | ✓   |
-| textarea  | ✓   |     |
-| button    | ✓   |     |
+| FormField     |     |     |
+| ------------- | --- | --- |
+| text          | ✓   |     |
+| number        | ✓   |     |
+| password      | ✓   |     |
+| checkbox      | ✓   |     |
+| select        | ✓   |     |
+| textarea      | ✓   |     |
+| range         | ✓   |     |
+| color         | ✓   |     |
+| radio         | ✓   |     |
+| checkboxGroup | ✓   |     |
+| button        | ✓   |     |
 
 ## Supported Layouts
 
@@ -18,3 +22,5 @@
 | ------ | --- |
 | row    | ✓   |
 | column | ✓   |
+| card   | ✓   |
+| grid   | ✓   |
