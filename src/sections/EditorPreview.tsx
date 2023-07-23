@@ -1,16 +1,22 @@
 import { useContext } from 'react';
 
 import {
+  // Layouts
   Paper,
+  Group,
   Stack,
+
+  // Form fields
   TextInput,
+  NumberInput,
   PasswordInput,
   Checkbox,
-  Slider,
   Select,
   Textarea,
-  Group,
   Button,
+
+  // Other
+  Slider,
 } from '@mantine/core';
 
 import { AppContext } from '../contexts';
@@ -51,7 +57,7 @@ const RenderField = ({
   const children = allItems.filter((child) => child.parent === uuid);
 
   switch (item.data?.type) {
-    case 'text':
+    case 'TextInput':
       return (
         <TextInput
           label={item.data.label}
@@ -59,7 +65,15 @@ const RenderField = ({
           withAsterisk={item.data.required}
         />
       );
-    case 'password':
+    case 'NumberInput':
+      return (
+        <NumberInput
+          label={item.data.label}
+          placeholder={item.data.placeholder}
+          withAsterisk={item.data.required}
+        />
+      );
+    case 'PasswordInput':
       return (
         <PasswordInput
           label={item.data.label}
@@ -67,13 +81,11 @@ const RenderField = ({
           withAsterisk={item.data.required}
         />
       );
-    case 'checkbox':
+    case 'Checkbox':
       return (
         <Checkbox label={item.data.label} placeholder={item.data.placeholder} />
       );
-    case 'range':
-      return <Slider label={item.data.label} />;
-    case 'select':
+    case 'Select':
       return (
         <Select
           label={item.data.label}
@@ -82,7 +94,7 @@ const RenderField = ({
           data={[]}
         />
       );
-    case 'textarea':
+    case 'Textarea':
       return (
         <Textarea
           label={item.data.label}
@@ -90,9 +102,11 @@ const RenderField = ({
           withAsterisk={item.data.required}
         />
       );
-    case 'button':
+    case 'Slider':
+      return <Slider label={item.data.label} />;
+    case 'Button':
       return <Button variant="light">{item.data.label}</Button>;
-    case 'row':
+    case 'Group':
       return (
         <Group position="right">
           {children.map((child) => (
@@ -100,7 +114,7 @@ const RenderField = ({
           ))}
         </Group>
       );
-    case 'column':
+    case 'Stack':
       return (
         <Stack>
           {children.map((child) => (

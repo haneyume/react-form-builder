@@ -56,13 +56,36 @@ export const CodePreview = () => {
 
 const genComponentCode = (children: string): string => {
   return `import React from 'react';
-import { Stack, Group, TextInput, PasswordInput, } from '@mantine/core';
+import {
+  // Form fields
+  TextInput,
+  NumberInput,
+  PasswordInput,
+  Checkbox,
+  Select,
+  Textarea,
+  Button,
+
+  // Layouts
+  Group,
+  Stack,
+} from '@mantine/core';
+import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
 
 export const Form = () => {
+  const form = useForm({
+    initialValues: {
+    },
+    validate: {
+    },
+  });
+
   return (
-    <Stack>
-      ${children}
-    </Stack>
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <Stack>
+        ${children}
+      </Stack>
+    </form>
   );
 };  
 `;
@@ -76,7 +99,7 @@ const genFieldCode = (
   const children = allItems.filter((child) => child.parent === uuid);
 
   switch (item.data?.type) {
-    case 'text':
+    case 'TextInput':
       return `
         <TextInput
           label="${item.data.label}"
@@ -84,7 +107,15 @@ const genFieldCode = (
           withAsterisk={${item.data.required}}
         />
       `;
-    case 'password':
+    case 'NumberInput':
+      return `
+        <NumberInput
+          label="${item.data.label}"
+          placeholder="${item.data.placeholder}"
+          withAsterisk={${item.data.required}}
+        />
+      `;
+    case 'PasswordInput':
       return `
         <PasswordInput
           label="${item.data.label}"
@@ -92,15 +123,11 @@ const genFieldCode = (
           withAsterisk={${item.data.required}}
         />
       `;
-    case 'checkbox':
+    case 'Checkbox':
       return `
         <Checkbox label="${item.data.label}" placeholder="${item.data.placeholder}" />
       `;
-    case 'range':
-      return `
-        <Slider label="${item.data.label}" />
-      `;
-    case 'select':
+    case 'Select':
       return `
         <Select
           label="${item.data.label}"
@@ -109,7 +136,7 @@ const genFieldCode = (
           data={[]}
         />
       `;
-    case 'textarea':
+    case 'Textarea':
       return `
         <Textarea
           label="${item.data.label}"
@@ -117,17 +144,21 @@ const genFieldCode = (
           withAsterisk={${item.data.required}}
         />
       `;
-    case 'button':
+    case 'Slider':
+      return `
+          <Slider label="${item.data.label}" />
+        `;
+    case 'Button':
       return `
         <Button>${item.data.label}</Button>
       `;
-    case 'row':
+    case 'Group':
       return `
         <Group>
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Group>
       `;
-    case 'column':
+    case 'Stack':
       return `
         <Stack>
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}

@@ -16,11 +16,35 @@
 | checkboxGroup | ✓   |     |
 | button        | ✓   |     |
 
+## Supported Components
+
+| Component     |     |
+| ------------- | --- |
+| TextInput     | ✓   |
+| NumberInput   | ✓   |
+| PasswordInput | ✓   |
+| Checkbox      | ✓   |
+| Select        | ✓   |
+| Textarea      | ✓   |
+| Slider        |     |
+| ColorInput    |     |
+| Radio         |     |
+| Switch        |     |
+| Button        | ✓   |
+
 ## Supported Layouts
 
 | Layout |     |
 | ------ | --- |
-| row    | ✓   |
-| column | ✓   |
-| card   | ✓   |
-| grid   | ✓   |
+| Group  | ✓   |
+| Stack  | ✓   |
+| Grid   |     |
+| Card   |     |
+
+## Supported Validation
+
+| Validation |     |
+| ---------- | --- |
+| isNotEmpty | ✓   |
+| isEmail    | ✓   |
+| isInRange  | ✓   |

@@ -34,7 +34,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       text: 'username',
       droppable: false,
       data: {
-        type: 'text',
+        type: 'TextInput',
         name: 'username',
         required: true,
         label: 'Username',
@@ -47,7 +47,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       text: 'password',
       droppable: false,
       data: {
-        type: 'password',
+        type: 'PasswordInput',
         name: 'password',
         required: true,
         label: 'Password',
@@ -57,10 +57,10 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
     {
       id: idForRow,
       parent: 'root',
-      text: 'row',
+      text: 'Group',
       droppable: true,
       data: {
-        type: 'row',
+        type: 'Group',
       },
     },
     {
@@ -69,7 +69,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       text: 'cancel',
       droppable: false,
       data: {
-        type: 'button',
+        type: 'Button',
         name: 'cancel',
         label: 'Cancel',
       },
@@ -80,7 +80,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       text: 'submit',
       droppable: false,
       data: {
-        type: 'button',
+        type: 'Button',
         name: 'submit',
         label: 'Submit',
       },

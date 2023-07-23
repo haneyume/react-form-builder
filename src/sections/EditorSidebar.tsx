@@ -37,20 +37,21 @@ export const EditorSidebar = () => {
 
   const renderIcon = (type: string) => {
     switch (type) {
-      case 'text':
-      case 'password':
+      case 'TextInput':
+      case 'NumberInput':
+      case 'PasswordInput':
         return <IconForms size={14} />;
-      case 'checkbox':
+      case 'Checkbox':
         return <IconCheckbox size={14} />;
-      case 'select':
+      case 'Select':
         return <IconSelect size={14} />;
-      case 'textarea':
+      case 'Textarea':
         return <IconAlignBoxLeftTop size={14} />;
-      case 'button':
+      case 'Button':
         return <IconHandClick size={14} />;
-      case 'row':
+      case 'Group':
         return <IconLayoutRows size={14} />;
-      case 'column':
+      case 'Stack':
         return <IconLayoutColumns size={14} />;
       default:
         return <IconForms size={14} />;

@@ -13,11 +13,11 @@ import { AppContext } from '../contexts';
 
 export const EditorPropertyEditor = () => {
   const defaultValue = [
-    'formfield_general',
-    'layout_general',
-    'select',
-    'textarea',
-    'button',
+    'FormfieldGeneral',
+    'LayoutGeneral',
+    'Select',
+    'Textarea',
+    'Button',
   ];
 
   return (
@@ -38,28 +38,14 @@ export const EditorPropertyEditor = () => {
 const FormFieldGeneralPanel = () => {
   const projectCtx = useContext(AppContext);
 
-  // const types_ = [
-  //   'text',
-  //   'number',
-  //   'password',
-  //   'checkbox',
-  //   'radio',
-  //   'date',
-  //   'time',
-  //   'file',
-  //   'range',
-  //   'color',
-  //   'select',
-  //   'textarea',
-  // ];
-
   const types = [
-    'text',
-    'password',
-    'checkbox',
-    'select',
-    'textarea',
-    'button',
+    'TextInput',
+    'NumberInput',
+    'PasswordInput',
+    'Checkbox',
+    'Select',
+    'Textarea',
+    'Button',
   ];
 
   const current = projectCtx.currentFormFieldItem;
@@ -70,7 +56,7 @@ const FormFieldGeneralPanel = () => {
   }
 
   return (
-    <Accordion.Item value="formfield_general">
+    <Accordion.Item value="FormfieldGeneral">
       <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -121,7 +107,7 @@ const FormFieldGeneralPanel = () => {
 const LayoutGeneralPanel = () => {
   const projectCtx = useContext(AppContext);
 
-  const types = ['row', 'column'];
+  const types = ['Group', 'Stack', 'Grid', 'Card'];
 
   const current = projectCtx.currentFormFieldItem;
   if (!current) {
@@ -131,7 +117,7 @@ const LayoutGeneralPanel = () => {
   }
 
   return (
-    <Accordion.Item value="layout_general">
+    <Accordion.Item value="LayoutGeneral">
       <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -155,12 +141,12 @@ const SelectPanel = () => {
   const current = projectCtx.currentFormFieldItem;
   if (!current) {
     return null;
-  } else if (current.data?.type !== 'select') {
+  } else if (current.data?.type !== 'Select') {
     return null;
   }
 
   return (
-    <Accordion.Item value="select">
+    <Accordion.Item value="Select">
       <Accordion.Control className="bg-neutral-800">Select</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -183,12 +169,12 @@ const TextareaPanel = () => {
   const current = projectCtx.currentFormFieldItem;
   if (!current) {
     return null;
-  } else if (current.data?.type !== 'textarea') {
+  } else if (current.data?.type !== 'Textarea') {
     return null;
   }
 
   return (
-    <Accordion.Item value="textarea">
+    <Accordion.Item value="Textarea">
       <Accordion.Control className="bg-neutral-800">Textarea</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -211,12 +197,12 @@ const ButtonPanel = () => {
   const current = projectCtx.currentFormFieldItem;
   if (!current) {
     return null;
-  } else if (current.data?.type !== 'button') {
+  } else if (current.data?.type !== 'Button') {
     return null;
   }
 
   return (
-    <Accordion.Item value="button">
+    <Accordion.Item value="Button">
       <Accordion.Control className="bg-neutral-800">Button</Accordion.Control>
       <Accordion.Panel>
         <Stack>

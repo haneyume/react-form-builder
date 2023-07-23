@@ -60,7 +60,7 @@ const ModalInstance = ({
         droppable: false,
         data: {
           name: data.name,
-          type: 'text',
+          type: 'TextInput',
           required: true,
           label: data.name,
           placeholder: `Enter your ${data.name}`,
