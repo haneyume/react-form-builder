@@ -24,7 +24,7 @@ export const CodePreview = () => {
       })
       .join('\n');
 
-    _code = genComponentCode(_code);
+    _code = genComponentCode(projectCtx.formFieldItems, _code);
 
     prettier
       .format(_code, {
@@ -54,7 +54,19 @@ export const CodePreview = () => {
   );
 };
 
-const genComponentCode = (children: string): string => {
+const genComponentCode = (
+  allItems: DNDTreeFormFieldItem[],
+  children: string,
+): string => {
+  const initialValues = allItems
+    .filter((items) => {
+      return items.data?.name;
+    })
+    .map((item) => {
+      return `${item.data?.name}: '${''}',`;
+    })
+    .join('\n');
+
   return `import React from 'react';
 import {
   // Form fields
@@ -75,6 +87,7 @@ import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
 export const Form = () => {
   const form = useForm({
     initialValues: {
+      ${initialValues}
     },
     validate: {
     },
@@ -105,6 +118,7 @@ const genFieldCode = (
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
           withAsterisk={${item.data.required}}
+          {...form.getInputProps('${item.data.name}')}
         />
       `;
     case 'NumberInput':
@@ -113,6 +127,7 @@ const genFieldCode = (
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
           withAsterisk={${item.data.required}}
+          {...form.getInputProps('${item.data.name}')}
         />
       `;
     case 'PasswordInput':
@@ -121,11 +136,16 @@ const genFieldCode = (
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
           withAsterisk={${item.data.required}}
+          {...form.getInputProps('${item.data.name}')}
         />
       `;
     case 'Checkbox':
       return `
-        <Checkbox label="${item.data.label}" placeholder="${item.data.placeholder}" />
+        <Checkbox
+          label="${item.data.label}"
+          placeholder="${item.data.placeholder}"
+          {...form.getInputProps('${item.data.name}', { type: 'checkbox' })}
+        />
       `;
     case 'Select':
       return `
@@ -134,6 +154,7 @@ const genFieldCode = (
           placeholder="${item.data.placeholder}"
           withAsterisk={${item.data.required}}
           data={[]}
+          {...form.getInputProps('${item.data.name}')}
         />
       `;
     case 'Textarea':
@@ -142,11 +163,15 @@ const genFieldCode = (
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
           withAsterisk={${item.data.required}}
+          {...form.getInputProps('${item.data.name}')}
         />
       `;
     case 'Slider':
       return `
-          <Slider label="${item.data.label}" />
+          <Slider
+            label="${item.data.label}"
+            {...form.getInputProps('${item.data.name}')}
+          />
         `;
     case 'Button':
       return `
