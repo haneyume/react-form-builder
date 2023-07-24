@@ -24,6 +24,8 @@ interface FormFieldItem {
   grow?: boolean;
   cols?: number;
   withBorder?: boolean;
+  text?: string;
+  order?: number;
 }
 
 type DNDTreeFormFieldItem = DNDTreeItem<FormFieldItem>;
@@ -34,6 +36,16 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
   const idForRow = uuidv4();
 
   return [
+    {
+      id: uuidv4(),
+      parent: 'root',
+      text: 'Title',
+      droppable: false,
+      data: {
+        type: 'Title',
+        text: '🤤 Login',
+      },
+    },
     {
       id: uuidv4(),
       parent: 'root',

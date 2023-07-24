@@ -20,7 +20,7 @@ import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 import clsx from 'clsx';
 
 import { AppContext } from '../contexts';
-import { NewFormFieldButton, NewLayoutButton } from '../modals';
+import { NewFormFieldButton, NewLayoutButton, NewTextButton } from '../modals';
 
 export const EditorSidebar = () => {
   const projectCtx = useContext(AppContext);
@@ -115,6 +115,7 @@ const SidebarHeader = () => {
     <Group position="right" spacing={5}>
       <NewFormFieldButton />
       <NewLayoutButton />
+      <NewTextButton />
     </Group>
   );
 };

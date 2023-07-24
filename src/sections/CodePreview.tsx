@@ -83,6 +83,10 @@ import {
   Stack,
   SimpleGrid,
   Card,
+
+  // Typography
+  Text,
+  Title,
 } from '@mantine/core';
 import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
 
@@ -209,6 +213,20 @@ const genFieldCode = (
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Card>
       `;
+    case 'Text':
+      return `
+          <Text>
+            ${item.data.text}
+          </Text>
+        `;
+    case 'Title':
+      return `
+          <Title
+            order={${item.data.order}}
+          >
+            ${item.data.text}
+          </Title>
+        `;
     default:
       return '';
   }

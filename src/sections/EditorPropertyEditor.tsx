@@ -8,6 +8,7 @@ import {
   NumberInput,
   Accordion,
   Checkbox,
+  Slider,
 } from '@mantine/core';
 
 import { AppContext } from '../contexts';
@@ -24,12 +25,16 @@ const formFieldTypes = [
 
 const layoutTypes = ['Flex', 'Group', 'Stack', 'SimpleGrid', 'Card'];
 
+const textTypes = ['Text', 'Title'];
+
 export const EditorPropertyEditor = () => {
   const defaultValue = [
-    'FormfieldGeneral',
+    'FormFieldGeneral',
     'LayoutGeneral',
+    'TextGeneral',
     ...formFieldTypes,
     ...layoutTypes,
+    ...textTypes,
   ];
 
   return (
@@ -38,6 +43,7 @@ export const EditorPropertyEditor = () => {
         <Accordion defaultValue={defaultValue} chevronPosition="left" multiple>
           <FormFieldGeneralPanel />
           <LayoutGeneralPanel />
+          <TextGeneralPanel />
 
           <TextInputPanel />
           <NumberInputPanel />
@@ -52,6 +58,9 @@ export const EditorPropertyEditor = () => {
           <StackPanel />
           <SimpleGridPanel />
           <CardPanel />
+
+          <TextPanel />
+          <TitlePanel />
         </Accordion>
       </Stack>
     </ScrollArea>
@@ -69,7 +78,7 @@ const FormFieldGeneralPanel = () => {
   }
 
   return (
-    <Accordion.Item value="FormfieldGeneral">
+    <Accordion.Item value="FormFieldGeneral">
       <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -124,6 +133,41 @@ const LayoutGeneralPanel = () => {
   );
 };
 
+const TextGeneralPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (!textTypes.includes(current.data?.type || '')) {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="TextGeneral">
+      <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <Select
+            label="type"
+            data={textTypes}
+            value={current.data?.type}
+            onChange={(value) =>
+              projectCtx.setSingleItem(
+                current.id,
+                {
+                  type: value!,
+                },
+                value!,
+              )
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
 const TextInputPanel = () => {
   const projectCtx = useContext(AppContext);
 
@@ -135,7 +179,7 @@ const TextInputPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Select">
+    <Accordion.Item value="TextInput">
       <Accordion.Control className="bg-neutral-800">
         TextInput
       </Accordion.Control>
@@ -185,7 +229,7 @@ const NumberInputPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Select">
+    <Accordion.Item value="NumberInput">
       <Accordion.Control className="bg-neutral-800">
         NumberInput
       </Accordion.Control>
@@ -235,7 +279,7 @@ const PasswordInputPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Select">
+    <Accordion.Item value="PasswordInput">
       <Accordion.Control className="bg-neutral-800">
         PasswordInput
       </Accordion.Control>
@@ -285,7 +329,7 @@ const CheckboxPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Select">
+    <Accordion.Item value="Checkbox">
       <Accordion.Control className="bg-neutral-800">Checkbox</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -447,7 +491,7 @@ const FlexPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Button">
+    <Accordion.Item value="Flex">
       <Accordion.Control className="bg-neutral-800">Flex</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -495,7 +539,7 @@ const GroupPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Button">
+    <Accordion.Item value="Group">
       <Accordion.Control className="bg-neutral-800">Group</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -536,7 +580,7 @@ const StackPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Button">
+    <Accordion.Item value="Stack">
       <Accordion.Control className="bg-neutral-800">Stack</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -584,7 +628,7 @@ const SimpleGridPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Button">
+    <Accordion.Item value="SimpleGrid">
       <Accordion.Control className="bg-neutral-800">
         SimpleGrid
       </Accordion.Control>
@@ -616,7 +660,7 @@ const CardPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Button">
+    <Accordion.Item value="Card">
       <Accordion.Control className="bg-neutral-800">Card</Accordion.Control>
       <Accordion.Panel>
         <Stack>
@@ -626,6 +670,75 @@ const CardPanel = () => {
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
                 withBorder: e.target.checked,
+              })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const TextPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'Text') {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="Text">
+      <Accordion.Control className="bg-neutral-800">Text</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <TextInput
+            label="text"
+            value={current.data?.text}
+            onChange={(e) =>
+              projectCtx.setSingleItem(current.id, { text: e.target.value })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const TitlePanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'Title') {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="Title">
+      <Accordion.Control className="bg-neutral-800">Title</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <TextInput
+            label="text"
+            value={current.data?.text}
+            onChange={(e) =>
+              projectCtx.setSingleItem(current.id, { text: e.target.value })
+            }
+          />
+
+          <Slider
+            label="order"
+            min={1}
+            max={6}
+            step={1}
+            value={current.data?.order}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                order: Number(value),
               })
             }
           />

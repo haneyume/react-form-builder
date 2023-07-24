@@ -18,6 +18,10 @@ import {
   SimpleGrid,
   Card,
 
+  // Typography
+  Text,
+  Title,
+
   // Other
   Slider,
 } from '@mantine/core';
@@ -151,6 +155,10 @@ const RenderField = ({
           ))}
         </Card>
       );
+    case 'Text':
+      return <Text>{item.data.text}</Text>;
+    case 'Title':
+      return <Title order={item.data.order as any}>{item.data.text}</Title>;
     default:
       return <div />;
   }
