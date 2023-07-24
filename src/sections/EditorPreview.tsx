@@ -33,8 +33,8 @@ export const EditorPreview = () => {
   const projectCtx = useContext(AppContext);
 
   return (
-    <div className="w-full h-full bg-pattern flex justify-center p-10">
-      <Paper className="w-1/2 p-5">
+    <div className="w-full h-full bg-pattern flex justify-center items-center p-10">
+      <Paper className="p-5 w-1/2 resize overflow-auto">
         <Stack>
           {projectCtx.formFieldItems
             .filter((item) => item.parent === 'root')
