@@ -1,11 +1,6 @@
 import { useContext } from 'react';
 
 import {
-  // Layouts
-  Paper,
-  Group,
-  Stack,
-
   // Form fields
   TextInput,
   NumberInput,
@@ -14,6 +9,14 @@ import {
   Select,
   Textarea,
   Button,
+
+  // Layouts
+  Paper,
+  Flex,
+  Group,
+  Stack,
+  SimpleGrid,
+  Card,
 
   // Other
   Slider,
@@ -62,7 +65,7 @@ const RenderField = ({
         <TextInput
           label={item.data.label}
           placeholder={item.data.placeholder}
-          withAsterisk={item.data.required}
+          withAsterisk={item.data.withAsterisk}
         />
       );
     case 'NumberInput':
@@ -70,7 +73,7 @@ const RenderField = ({
         <NumberInput
           label={item.data.label}
           placeholder={item.data.placeholder}
-          withAsterisk={item.data.required}
+          withAsterisk={item.data.withAsterisk}
         />
       );
     case 'PasswordInput':
@@ -78,7 +81,7 @@ const RenderField = ({
         <PasswordInput
           label={item.data.label}
           placeholder={item.data.placeholder}
-          withAsterisk={item.data.required}
+          withAsterisk={item.data.withAsterisk}
         />
       );
     case 'Checkbox':
@@ -90,7 +93,7 @@ const RenderField = ({
         <Select
           label={item.data.label}
           placeholder={item.data.placeholder}
-          withAsterisk={item.data.required}
+          withAsterisk={item.data.withAsterisk}
           data={[]}
         />
       );
@@ -99,16 +102,26 @@ const RenderField = ({
         <Textarea
           label={item.data.label}
           placeholder={item.data.placeholder}
-          withAsterisk={item.data.required}
+          withAsterisk={item.data.withAsterisk}
         />
       );
     case 'Slider':
-      return <Slider label={item.data.label} />;
+      return (
+        <Slider label={item.data.label} placeholder={item.data.placeholder} />
+      );
     case 'Button':
       return <Button variant="light">{item.data.label}</Button>;
+    case 'Flex':
+      return (
+        <Flex align={item.data.align} justify={item.data.justify}>
+          {children.map((child) => (
+            <RenderField key={child.id} item={child} allItems={allItems} />
+          ))}
+        </Flex>
+      );
     case 'Group':
       return (
-        <Group position="right">
+        <Group position={item.data.position as any} grow={item.data.grow}>
           {children.map((child) => (
             <RenderField key={child.id} item={child} allItems={allItems} />
           ))}
@@ -116,11 +129,27 @@ const RenderField = ({
       );
     case 'Stack':
       return (
-        <Stack>
+        <Stack align={item.data.align} justify={item.data.justify}>
           {children.map((child) => (
             <RenderField key={child.id} item={child} allItems={allItems} />
           ))}
         </Stack>
+      );
+    case 'SimpleGrid':
+      return (
+        <SimpleGrid cols={item.data.cols}>
+          {children.map((child) => (
+            <RenderField key={child.id} item={child} allItems={allItems} />
+          ))}
+        </SimpleGrid>
+      );
+    case 'Card':
+      return (
+        <Card withBorder={item.data.withBorder}>
+          {children.map((child) => (
+            <RenderField key={child.id} item={child} allItems={allItems} />
+          ))}
+        </Card>
       );
     default:
       return <div />;

@@ -13,11 +13,17 @@ interface DNDTreeItem<T> {
 interface FormFieldItem {
   type: string;
   name?: string;
-  required?: boolean;
   label?: string;
   placeholder?: string;
+  withAsterisk?: boolean;
   readonly?: boolean;
   disabled?: boolean;
+  align?: string;
+  justify?: string;
+  position?: string;
+  grow?: boolean;
+  cols?: number;
+  withBorder?: boolean;
 }
 
 type DNDTreeFormFieldItem = DNDTreeItem<FormFieldItem>;
@@ -36,9 +42,9 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       data: {
         type: 'TextInput',
         name: 'username',
-        required: true,
         label: 'Username',
         placeholder: 'Enter your username',
+        withAsterisk: true,
       },
     },
     {
@@ -49,9 +55,9 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       data: {
         type: 'PasswordInput',
         name: 'password',
-        required: true,
         label: 'Password',
         placeholder: 'Enter your password',
+        withAsterisk: true,
       },
     },
     {
@@ -61,6 +67,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
       droppable: true,
       data: {
         type: 'Group',
+        position: 'right',
       },
     },
     {

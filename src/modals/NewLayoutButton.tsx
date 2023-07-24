@@ -19,11 +19,10 @@ export const NewLayoutButton = () => {
             {
               id: uuidv4(),
               parent: 'root',
-              text: 'Group',
+              text: 'Flex',
               droppable: true,
               data: {
-                name: 'Group',
-                type: 'Group',
+                type: 'Flex',
               },
             },
           ]);

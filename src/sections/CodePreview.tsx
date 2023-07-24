@@ -81,6 +81,8 @@ import {
   // Layouts
   Group,
   Stack,
+  SimpleGrid,
+  Card,
 } from '@mantine/core';
 import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
 
@@ -117,7 +119,7 @@ const genFieldCode = (
         <TextInput
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.required}}
+          withAsterisk={${item.data.withAsterisk}}
           {...form.getInputProps('${item.data.name}')}
         />
       `;
@@ -126,7 +128,7 @@ const genFieldCode = (
         <NumberInput
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.required}}
+          withAsterisk={${item.data.withAsterisk}}
           {...form.getInputProps('${item.data.name}')}
         />
       `;
@@ -135,7 +137,7 @@ const genFieldCode = (
         <PasswordInput
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.required}}
+          withAsterisk={${item.data.withAsterisk}}
           {...form.getInputProps('${item.data.name}')}
         />
       `;
@@ -152,7 +154,7 @@ const genFieldCode = (
         <Select
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.required}}
+          withAsterisk={${item.data.withAsterisk}}
           data={[]}
           {...form.getInputProps('${item.data.name}')}
         />
@@ -162,7 +164,7 @@ const genFieldCode = (
         <Textarea
           label="${item.data.label}"
           placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.required}}
+          withAsterisk={${item.data.withAsterisk}}
           {...form.getInputProps('${item.data.name}')}
         />
       `;
@@ -177,6 +179,12 @@ const genFieldCode = (
       return `
         <Button>${item.data.label}</Button>
       `;
+    case 'Flex':
+      return `
+        <Flex>
+          ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
+        </Flex>
+      `;
     case 'Group':
       return `
         <Group>
@@ -188,6 +196,18 @@ const genFieldCode = (
         <Stack>
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Stack>
+      `;
+    case 'SimpleGrid':
+      return `
+        <SimpleGrid>
+          ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
+        </SimpleGrid>
+      `;
+    case 'Card':
+      return `
+        <Card>
+          ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
+        </Card>
       `;
     default:
       return '';

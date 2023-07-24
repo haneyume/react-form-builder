@@ -5,6 +5,7 @@ import {
   ScrollArea,
   Select,
   TextInput,
+  NumberInput,
   Accordion,
   Checkbox,
 } from '@mantine/core';
@@ -21,7 +22,7 @@ const formFieldTypes = [
   'Button',
 ];
 
-const layoutTypes = ['Group', 'Stack', 'Grid', 'Card'];
+const layoutTypes = ['Flex', 'Group', 'Stack', 'SimpleGrid', 'Card'];
 
 export const EditorPropertyEditor = () => {
   const defaultValue = [
@@ -37,6 +38,7 @@ export const EditorPropertyEditor = () => {
         <Accordion defaultValue={defaultValue} chevronPosition="left" multiple>
           <FormFieldGeneralPanel />
           <LayoutGeneralPanel />
+
           <TextInputPanel />
           <NumberInputPanel />
           <PasswordInputPanel />
@@ -44,8 +46,12 @@ export const EditorPropertyEditor = () => {
           <SelectPanel />
           <TextareaPanel />
           <ButtonPanel />
+
+          <FlexPanel />
           <GroupPanel />
           <StackPanel />
+          <SimpleGridPanel />
+          <CardPanel />
         </Accordion>
       </Stack>
     </ScrollArea>
@@ -67,10 +73,10 @@ const FormFieldGeneralPanel = () => {
       <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
       <Accordion.Panel>
         <Stack>
-          <TextInput label="Name" value={current.data?.name} disabled />
+          <TextInput label="name" value={current.data?.name} disabled />
 
           <Select
-            label="Type"
+            label="type"
             data={formFieldTypes}
             value={current.data?.type}
             onChange={(value) =>
@@ -99,7 +105,7 @@ const LayoutGeneralPanel = () => {
       <Accordion.Panel>
         <Stack>
           <Select
-            label="Type"
+            label="type"
             data={layoutTypes}
             value={current.data?.type}
             onChange={(value) =>
@@ -107,7 +113,6 @@ const LayoutGeneralPanel = () => {
                 current.id,
                 {
                   type: value!,
-                  name: value!,
                 },
                 value!,
               )
@@ -137,7 +142,7 @@ const TextInputPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
@@ -145,7 +150,7 @@ const TextInputPanel = () => {
           />
 
           <TextInput
-            label="Placeholder"
+            label="placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
@@ -155,11 +160,11 @@ const TextInputPanel = () => {
           />
 
           <Checkbox
-            label="Required"
-            checked={current.data?.required}
+            label="withAsterisk"
+            checked={current.data?.withAsterisk}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
+                withAsterisk: e.target.checked,
               })
             }
           />
@@ -187,7 +192,7 @@ const NumberInputPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
@@ -195,7 +200,7 @@ const NumberInputPanel = () => {
           />
 
           <TextInput
-            label="Placeholder"
+            label="placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
@@ -205,11 +210,11 @@ const NumberInputPanel = () => {
           />
 
           <Checkbox
-            label="Required"
-            checked={current.data?.required}
+            label="withAsterisk"
+            checked={current.data?.withAsterisk}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
+                withAsterisk: e.target.checked,
               })
             }
           />
@@ -237,7 +242,7 @@ const PasswordInputPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
@@ -245,7 +250,7 @@ const PasswordInputPanel = () => {
           />
 
           <TextInput
-            label="Placeholder"
+            label="placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
@@ -255,11 +260,11 @@ const PasswordInputPanel = () => {
           />
 
           <Checkbox
-            label="Required"
-            checked={current.data?.required}
+            label="withAsterisk"
+            checked={current.data?.withAsterisk}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
+                withAsterisk: e.target.checked,
               })
             }
           />
@@ -285,7 +290,7 @@ const CheckboxPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
@@ -293,21 +298,11 @@ const CheckboxPanel = () => {
           />
 
           <TextInput
-            label="Placeholder"
+            label="placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
                 placeholder: e.target.value,
-              })
-            }
-          />
-
-          <Checkbox
-            label="Required"
-            checked={current.data?.required}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
               })
             }
           />
@@ -333,7 +328,7 @@ const SelectPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
@@ -341,7 +336,7 @@ const SelectPanel = () => {
           />
 
           <TextInput
-            label="Placeholder"
+            label="placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
@@ -351,11 +346,11 @@ const SelectPanel = () => {
           />
 
           <Checkbox
-            label="Required"
-            checked={current.data?.required}
+            label="withAsterisk"
+            checked={current.data?.withAsterisk}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
+                withAsterisk: e.target.checked,
               })
             }
           />
@@ -381,7 +376,7 @@ const TextareaPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
@@ -389,7 +384,7 @@ const TextareaPanel = () => {
           />
 
           <TextInput
-            label="Placeholder"
+            label="placeholder"
             value={current.data?.placeholder}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
@@ -399,11 +394,11 @@ const TextareaPanel = () => {
           />
 
           <Checkbox
-            label="Required"
-            checked={current.data?.required}
+            label="withAsterisk"
+            checked={current.data?.withAsterisk}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
+                withAsterisk: e.target.checked,
               })
             }
           />
@@ -429,10 +424,58 @@ const ButtonPanel = () => {
       <Accordion.Panel>
         <Stack>
           <TextInput
-            label="Label"
+            label="label"
             value={current.data?.label}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, { label: e.target.value })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const FlexPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'Flex') {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="Button">
+      <Accordion.Control className="bg-neutral-800">Flex</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <Select
+            label="align"
+            data={['stretch', 'center', 'flex-start', 'flex-end']}
+            value={current.data?.align}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                align: value!,
+              })
+            }
+          />
+
+          <Select
+            label="justify"
+            data={[
+              'center',
+              'flex-start',
+              'flex-end',
+              'space-between',
+              'space-around',
+            ]}
+            value={current.data?.justify}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                justify: value!,
+              })
             }
           />
         </Stack>
@@ -457,27 +500,22 @@ const GroupPanel = () => {
       <Accordion.Panel>
         <Stack>
           <Select
-            label="Position"
+            label="position"
             data={['left', 'center', 'right', 'apart']}
-            value={current.data?.type}
+            value={current.data?.position}
             onChange={(value) =>
-              projectCtx.setSingleItem(
-                current.id,
-                {
-                  type: value!,
-                  name: value!,
-                },
-                value!,
-              )
+              projectCtx.setSingleItem(current.id, {
+                position: value!,
+              })
             }
           />
 
           <Checkbox
-            label="Grow"
-            checked={current.data?.required}
+            label="grow"
+            checked={current.data?.grow}
             onChange={(e) =>
               projectCtx.setSingleItem(current.id, {
-                required: e.target.checked,
+                grow: e.target.checked,
               })
             }
           />
@@ -503,23 +541,18 @@ const StackPanel = () => {
       <Accordion.Panel>
         <Stack>
           <Select
-            label="Align"
+            label="align"
             data={['stretch', 'center', 'flex-start', 'flex-end']}
-            value={current.data?.type}
+            value={current.data?.align}
             onChange={(value) =>
-              projectCtx.setSingleItem(
-                current.id,
-                {
-                  type: value!,
-                  name: value!,
-                },
-                value!,
-              )
+              projectCtx.setSingleItem(current.id, {
+                align: value!,
+              })
             }
           />
 
           <Select
-            label="Justify"
+            label="justify"
             data={[
               'center',
               'flex-start',
@@ -527,16 +560,73 @@ const StackPanel = () => {
               'space-between',
               'space-around',
             ]}
-            value={current.data?.type}
+            value={current.data?.justify}
             onChange={(value) =>
-              projectCtx.setSingleItem(
-                current.id,
-                {
-                  type: value!,
-                  name: value!,
-                },
-                value!,
-              )
+              projectCtx.setSingleItem(current.id, {
+                justify: value!,
+              })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const SimpleGridPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'SimpleGrid') {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="Button">
+      <Accordion.Control className="bg-neutral-800">
+        SimpleGrid
+      </Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <NumberInput
+            label="cols"
+            value={current.data?.cols}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                cols: Number(value),
+              })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const CardPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type !== 'Card') {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="Button">
+      <Accordion.Control className="bg-neutral-800">Card</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <Checkbox
+            label="withBorder"
+            checked={current.data?.withBorder}
+            onChange={(e) =>
+              projectCtx.setSingleItem(current.id, {
+                withBorder: e.target.checked,
+              })
             }
           />
         </Stack>
