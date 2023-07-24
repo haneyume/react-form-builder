@@ -60,7 +60,7 @@ const genComponentCode = (
 ): string => {
   const initialValues = allItems
     .filter((items) => {
-      return items.data?.name;
+      return items.data?.name && items.data?.type !== 'Button';
     })
     .map((item) => {
       return `${item.data?.name}: '${''}',`;

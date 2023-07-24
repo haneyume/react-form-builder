@@ -29,7 +29,11 @@ export interface AppContextProps {
 
   currentFormFieldItem: DNDTreeFormFieldItem | undefined;
 
-  setSingleItem: (id: string, data: Partial<FormFieldItem>) => void;
+  setSingleItem: (
+    id: string,
+    data: Partial<FormFieldItem>,
+    text?: string,
+  ) => void;
 }
 
 export const AppContext = createContext<AppContextProps>(undefined!);
@@ -60,7 +64,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
   }, [selectedFormFieldId]);
 
-  const setSingleItem = (id: string, data: Partial<FormFieldItem>) => {
+  const setSingleItem = (
+    id: string,
+    data: Partial<FormFieldItem>,
+    text?: string,
+  ) => {
     setFormFieldItems((prev) => {
       const index = prev.findIndex((item) => item.id === id);
       if (index === -1) {
@@ -72,6 +80,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         ...updated[index].data,
         ...data,
       } as any;
+
+      if (text) {
+        updated[index].text = text;
+      }
 
       return updated;
     });
