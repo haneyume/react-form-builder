@@ -35,6 +35,7 @@ export const EditorPropertyEditor = () => {
     ...formFieldTypes,
     ...layoutTypes,
     ...textTypes,
+    'Validation',
   ];
 
   return (
@@ -61,6 +62,8 @@ export const EditorPropertyEditor = () => {
 
           <TextPanel />
           <TitlePanel />
+
+          <ValidationPanel />
         </Accordion>
       </Stack>
     </ScrollArea>
@@ -740,6 +743,51 @@ const TitlePanel = () => {
               projectCtx.setSingleItem(current.id, {
                 order: Number(value),
               })
+            }
+          />
+        </Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+const ValidationPanel = () => {
+  const projectCtx = useContext(AppContext);
+
+  const current = projectCtx.currentFormFieldItem;
+  if (!current) {
+    return null;
+  } else if (current.data?.type === 'Button') {
+    return null;
+  } else if (!formFieldTypes.includes(current.data?.type || '')) {
+    return null;
+  }
+
+  return (
+    <Accordion.Item value="Validation">
+      <Accordion.Control className="bg-neutral-800">
+        Validation
+      </Accordion.Control>
+      <Accordion.Panel>
+        <Stack>
+          <Select
+            label="Validate"
+            data={[
+              { label: 'none', value: 'none' },
+              { label: 'isNotEmpty', value: 'isNotEmpty' },
+              { label: 'isEmail', value: 'isEmail' },
+              { label: 'isInRange', value: 'isInRange' },
+              { label: 'hasLength', value: 'hasLength' },
+              { label: 'matches', value: 'matches' },
+            ]}
+            defaultValue={'none'}
+          />
+
+          <TextInput
+            label="errorMessage"
+            value={current.data?.text}
+            onChange={(e) =>
+              projectCtx.setSingleItem(current.id, { text: e.target.value })
             }
           />
         </Stack>
