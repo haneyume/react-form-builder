@@ -14,6 +14,14 @@ import {
 
 import { AppContext } from '../contexts';
 
+import {
+  PropertySection,
+  PropertyFieldString,
+  PropertyFieldBoolean,
+  PropertyFieldEnum,
+  PropertyFieldNumber,
+} from './property/PropertyUIs';
+
 const formFieldTypes = [
   'TextInput',
   'NumberInput',
@@ -182,581 +190,141 @@ const TextGeneralPanel = () => {
 };
 
 const TextInputPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'TextInput') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="TextInput">
-      <Accordion.Control className="bg-neutral-800">
-        TextInput
-      </Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="placeholder"
-            value={current.data?.placeholder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                placeholder: e.target.value,
-              })
-            }
-          />
-
-          <Checkbox
-            label="withAsterisk"
-            checked={current.data?.withAsterisk}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                withAsterisk: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="TextInput">
+      <PropertyFieldString field="label" />
+      <PropertyFieldString field="placeholder" />
+      <PropertyFieldBoolean field="withAsterisk" />
+    </PropertySection>
   );
 };
 
 const NumberInputPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'NumberInput') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="NumberInput">
-      <Accordion.Control className="bg-neutral-800">
-        NumberInput
-      </Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="placeholder"
-            value={current.data?.placeholder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                placeholder: e.target.value,
-              })
-            }
-          />
-
-          <Checkbox
-            label="withAsterisk"
-            checked={current.data?.withAsterisk}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                withAsterisk: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="NumberInput">
+      <PropertyFieldString field="label" />
+      <PropertyFieldString field="placeholder" />
+      <PropertyFieldBoolean field="withAsterisk" />
+    </PropertySection>
   );
 };
 
 const PasswordInputPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'PasswordInput') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="PasswordInput">
-      <Accordion.Control className="bg-neutral-800">
-        PasswordInput
-      </Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="placeholder"
-            value={current.data?.placeholder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                placeholder: e.target.value,
-              })
-            }
-          />
-
-          <Checkbox
-            label="withAsterisk"
-            checked={current.data?.withAsterisk}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                withAsterisk: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="PasswordInput">
+      <PropertyFieldString field="label" />
+      <PropertyFieldString field="placeholder" />
+      <PropertyFieldBoolean field="withAsterisk" />
+    </PropertySection>
   );
 };
 
 const CheckboxPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Checkbox') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Checkbox">
-      <Accordion.Control className="bg-neutral-800">Checkbox</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="placeholder"
-            value={current.data?.placeholder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                placeholder: e.target.value,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Checkbox">
+      <PropertyFieldString field="label" />
+      <PropertyFieldString field="placeholder" />
+    </PropertySection>
   );
 };
 
 const SelectPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Select') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Select">
-      <Accordion.Control className="bg-neutral-800">Select</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="placeholder"
-            value={current.data?.placeholder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                placeholder: e.target.value,
-              })
-            }
-          />
-
-          <Checkbox
-            label="withAsterisk"
-            checked={current.data?.withAsterisk}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                withAsterisk: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Select">
+      <PropertyFieldString field="label" />
+      <PropertyFieldString field="placeholder" />
+      <PropertyFieldBoolean field="withAsterisk" />
+    </PropertySection>
   );
 };
 
 const TextareaPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Textarea') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Textarea">
-      <Accordion.Control className="bg-neutral-800">Textarea</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="placeholder"
-            value={current.data?.placeholder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                placeholder: e.target.value,
-              })
-            }
-          />
-
-          <Checkbox
-            label="withAsterisk"
-            checked={current.data?.withAsterisk}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                withAsterisk: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Textarea">
+      <PropertyFieldString field="label" />
+      <PropertyFieldString field="placeholder" />
+      <PropertyFieldBoolean field="withAsterisk" />
+    </PropertySection>
   );
 };
 
 const ButtonPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Button') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Button">
-      <Accordion.Control className="bg-neutral-800">Button</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="label"
-            value={current.data?.label}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { label: e.target.value })
-            }
-          />
-
-          <Select
-            label="variant"
-            data={[
-              'default',
-              'outline',
-              'white',
-              'light',
-              'filled',
-              'gradient',
-              'subtle',
-            ]}
-            value={current.data?.buttonVariant}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                buttonVariant: value!,
-              })
-            }
-          />
-
-          <Select
-            label="type"
-            data={['button', 'submit', 'reset']}
-            value={current.data?.buttonType}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                buttonType: value!,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Button">
+      <PropertyFieldString field="label" />
+      <PropertyFieldEnum
+        field="buttonVariant"
+        data={[
+          'default',
+          'outline',
+          'white',
+          'light',
+          'filled',
+          'gradient',
+          'subtle',
+        ]}
+      />
+      <PropertyFieldEnum
+        field="buttonType"
+        data={['button', 'submit', 'reset']}
+      />
+    </PropertySection>
   );
 };
 
 const FlexPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Flex') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Flex">
-      <Accordion.Control className="bg-neutral-800">Flex</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Select
-            label="direction"
-            data={FlexDirection}
-            value={current.data?.direction}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                direction: value!,
-              })
-            }
-          />
-
-          <Select
-            label="wrap"
-            data={FlexWrap}
-            value={current.data?.wrap}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                wrap: value!,
-              })
-            }
-          />
-
-          <Select
-            label="align"
-            data={AlignItems}
-            value={current.data?.align}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                align: value!,
-              })
-            }
-          />
-
-          <Select
-            label="justify"
-            data={JustifyContent}
-            value={current.data?.justify}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                justify: value!,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Flex">
+      <PropertyFieldEnum field="direction" data={FlexDirection} />
+      <PropertyFieldEnum field="wrap" data={FlexWrap} />
+      <PropertyFieldEnum field="align" data={AlignItems} />
+      <PropertyFieldEnum field="justify" data={JustifyContent} />
+    </PropertySection>
   );
 };
 
 const GroupPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Group') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Group">
-      <Accordion.Control className="bg-neutral-800">Group</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Select
-            label="position"
-            data={['left', 'center', 'right', 'apart']}
-            value={current.data?.position}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                position: value!,
-              })
-            }
-          />
-
-          <Checkbox
-            label="grow"
-            checked={current.data?.grow}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                grow: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Group">
+      <PropertyFieldEnum
+        field="position"
+        data={['left', 'center', 'right', 'apart']}
+      />
+      <PropertyFieldBoolean field="grow" />
+    </PropertySection>
   );
 };
 
 const StackPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Stack') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Stack">
-      <Accordion.Control className="bg-neutral-800">Stack</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Select
-            label="align"
-            data={AlignItems}
-            value={current.data?.align}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                align: value!,
-              })
-            }
-          />
-
-          <Select
-            label="justify"
-            data={JustifyContent}
-            value={current.data?.justify}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                justify: value!,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Stack">
+      <PropertyFieldEnum field="align" data={AlignItems} />
+      <PropertyFieldEnum field="justify" data={JustifyContent} />
+    </PropertySection>
   );
 };
 
 const SimpleGridPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'SimpleGrid') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="SimpleGrid">
-      <Accordion.Control className="bg-neutral-800">
-        SimpleGrid
-      </Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <NumberInput
-            label="cols"
-            value={current.data?.cols}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                cols: Number(value),
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="SimpleGrid">
+      <PropertyFieldNumber field="cols" />
+    </PropertySection>
   );
 };
 
 const CardPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Card') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Card">
-      <Accordion.Control className="bg-neutral-800">Card</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Checkbox
-            label="withBorder"
-            checked={current.data?.withBorder}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, {
-                withBorder: e.target.checked,
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Card">
+      <PropertyFieldBoolean field="withBorder" />
+    </PropertySection>
   );
 };
 
 const TextPanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Text') {
-    return null;
-  }
-
   return (
-    <Accordion.Item value="Text">
-      <Accordion.Control className="bg-neutral-800">Text</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="text"
-            value={current.data?.text}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { text: e.target.value })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Text">
+      <PropertyFieldString field="text" />
+    </PropertySection>
   );
 };
 
@@ -771,34 +339,23 @@ const TitlePanel = () => {
   }
 
   return (
-    <Accordion.Item value="Title">
-      <Accordion.Control className="bg-neutral-800">Title</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput
-            label="text"
-            value={current.data?.text}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { text: e.target.value })
-            }
-          />
+    <PropertySection label="Title">
+      <PropertyFieldString field="text" />
 
-          <Text size={'0.875rem'}>order</Text>
-          <Slider
-            label="order"
-            min={1}
-            max={6}
-            step={1}
-            value={current.data?.order}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, {
-                order: Number(value),
-              })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+      <Text size={'0.875rem'}>order</Text>
+      <Slider
+        label="order"
+        min={1}
+        max={6}
+        step={1}
+        value={current.data?.order}
+        onChange={(value) =>
+          projectCtx.setSingleItem(current.id, {
+            order: Number(value),
+          })
+        }
+      />
+    </PropertySection>
   );
 };
 
