@@ -12,20 +12,32 @@ interface DNDTreeItem<T> {
 
 interface FormFieldItem {
   type: string;
+
+  // input
   name?: string;
   label?: string;
   placeholder?: string;
   withAsterisk?: boolean;
   readonly?: boolean;
   disabled?: boolean;
+
+  // layout
+  direction?: string;
+  wrap?: string;
   align?: string;
   justify?: string;
   position?: string;
   grow?: boolean;
   cols?: number;
   withBorder?: boolean;
+
+  // text
   text?: string;
   order?: number;
+
+  // validation
+  validateType?: string;
+  errorMessage?: string;
 }
 
 type DNDTreeFormFieldItem = DNDTreeItem<FormFieldItem>;

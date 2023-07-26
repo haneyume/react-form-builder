@@ -67,6 +67,29 @@ const genComponentCode = (
     })
     .join('\n');
 
+  const validate = allItems
+    .filter((items) => {
+      return items.data?.name && items.data?.type !== 'Button';
+    })
+    .filter((item) => {
+      return item.data?.validateType;
+    })
+    .map((item) => {
+      const name = item.data?.name;
+      const validateType = item.data?.validateType;
+      const errorMessage = item.data?.errorMessage;
+
+      switch (validateType) {
+        case 'isNotEmpty':
+          return `${name}: isNotEmpty('${errorMessage}'),`;
+        case 'isEmail':
+          return `${name}: isEmail('${errorMessage}'),`;
+        default:
+          return '';
+      }
+    })
+    .join('\n');
+
   return `import React from 'react';
 import {
   // Form fields
@@ -96,6 +119,7 @@ export const Form = () => {
       ${initialValues}
     },
     validate: {
+      ${validate}
     },
   });
 

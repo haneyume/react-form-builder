@@ -1,21 +1,5 @@
 # react-form-builder
 
-## Supported Form Fields
-
-| FormField     |     |     |
-| ------------- | --- | --- |
-| text          | ✓   |     |
-| number        | ✓   |     |
-| password      | ✓   |     |
-| checkbox      | ✓   |     |
-| select        | ✓   |     |
-| textarea      | ✓   |     |
-| range         | ✓   |     |
-| color         | ✓   |     |
-| radio         | ✓   |     |
-| checkboxGroup | ✓   |     |
-| button        | ✓   |     |
-
 ## Supported Components
 
 | Component     |     |
@@ -38,8 +22,8 @@
 | ------ | --- |
 | Group  | ✓   |
 | Stack  | ✓   |
-| Grid   |     |
-| Card   |     |
+| Grid   | ✓   |
+| Card   | ✓   |
 
 ## Supported Validation
 
@@ -47,4 +31,113 @@
 | ---------- | --- |
 | isNotEmpty | ✓   |
 | isEmail    | ✓   |
-| isInRange  | ✓   |
+| isInRange  |     |
+| hasLength  |     |
+| matches    |     |
+
+## Component Props
+
+### TextInput
+
+| Prop Name    | Type    |
+| ------------ | ------- |
+| label        | string  |
+| placeholder  | string  |
+| withAsterisk | boolean |
+
+### NumberInput
+
+| Prop Name    | Type    |
+| ------------ | ------- |
+| label        | string  |
+| placeholder  | string  |
+| withAsterisk | boolean |
+
+### PasswordInput
+
+| Prop Name    | Type    |
+| ------------ | ------- |
+| label        | string  |
+| placeholder  | string  |
+| withAsterisk | boolean |
+
+### Checkbox
+
+| Prop Name   | Type   |
+| ----------- | ------ |
+| label       | string |
+| placeholder | string |
+
+### Select
+
+| Prop Name    | Type    |
+| ------------ | ------- |
+| label        | string  |
+| placeholder  | string  |
+| withAsterisk | boolean |
+| data         | Array   |
+
+### Textarea
+
+| Prop Name    | Type    |
+| ------------ | ------- |
+| label        | string  |
+| placeholder  | string  |
+| withAsterisk | boolean |
+
+### Button
+
+| Prop Name | Type   |
+| --------- | ------ |
+| label     | string |
+
+### Flex
+
+| Prop Name | Type           |
+| --------- | -------------- |
+| direction | FlexDirection  |
+| wrap      | FlexWrap       |
+| align     | AlignItems     |
+| justify   | JustifyContent |
+| gap       | SpacingValue   |
+| rowGap    | SpacingValue   |
+| columnGap | SpacingValue   |
+
+### Group
+
+| Prop Name | Type                       |
+| --------- | -------------------------- |
+| position  | left, center, right, apart |
+| grow      | boolean                    |
+
+### Stack
+
+| Prop Name | Type           |
+| --------- | -------------- |
+| align     | AlignItems     |
+| justify   | JustifyContent |
+
+### SimpleGrid
+
+| Prop Name | Type   |
+| --------- | ------ |
+| cols      | number |
+
+### Card
+
+| Prop Name  | Type    |
+| ---------- | ------- |
+| withBorder | boolean |
+
+### Text
+
+| Prop Name | Type   |
+| --------- | ------ |
+| text      | string |
+
+### Title
+
+| Prop Name | Type             |
+| --------- | ---------------- |
+| text      | string           |
+| order     | 1, 2, 3, 4, 5, 6 |

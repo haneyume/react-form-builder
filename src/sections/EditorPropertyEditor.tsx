@@ -22,10 +22,19 @@ const formFieldTypes = [
   'Textarea',
   'Button',
 ];
-
 const layoutTypes = ['Flex', 'Group', 'Stack', 'SimpleGrid', 'Card'];
-
 const textTypes = ['Text', 'Title'];
+
+const FlexDirection = ['row', 'column', 'row-reverse', 'column-reverse'];
+const FlexWrap = ['nowrap', 'wrap', 'wrap-reverse'];
+const AlignItems = ['stretch', 'center', 'flex-start', 'flex-end'];
+const JustifyContent = [
+  'center',
+  'flex-start',
+  'flex-end',
+  'space-between',
+  'space-around',
+];
 
 export const EditorPropertyEditor = () => {
   const defaultValue = [
@@ -499,8 +508,30 @@ const FlexPanel = () => {
       <Accordion.Panel>
         <Stack>
           <Select
+            label="direction"
+            data={FlexDirection}
+            value={current.data?.direction}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                direction: value!,
+              })
+            }
+          />
+
+          <Select
+            label="wrap"
+            data={FlexWrap}
+            value={current.data?.wrap}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                wrap: value!,
+              })
+            }
+          />
+
+          <Select
             label="align"
-            data={['stretch', 'center', 'flex-start', 'flex-end']}
+            data={AlignItems}
             value={current.data?.align}
             onChange={(value) =>
               projectCtx.setSingleItem(current.id, {
@@ -511,13 +542,7 @@ const FlexPanel = () => {
 
           <Select
             label="justify"
-            data={[
-              'center',
-              'flex-start',
-              'flex-end',
-              'space-between',
-              'space-around',
-            ]}
+            data={JustifyContent}
             value={current.data?.justify}
             onChange={(value) =>
               projectCtx.setSingleItem(current.id, {
@@ -589,7 +614,7 @@ const StackPanel = () => {
         <Stack>
           <Select
             label="align"
-            data={['stretch', 'center', 'flex-start', 'flex-end']}
+            data={AlignItems}
             value={current.data?.align}
             onChange={(value) =>
               projectCtx.setSingleItem(current.id, {
@@ -600,13 +625,7 @@ const StackPanel = () => {
 
           <Select
             label="justify"
-            data={[
-              'center',
-              'flex-start',
-              'flex-end',
-              'space-between',
-              'space-around',
-            ]}
+            data={JustifyContent}
             value={current.data?.justify}
             onChange={(value) =>
               projectCtx.setSingleItem(current.id, {
@@ -776,20 +795,27 @@ const ValidationPanel = () => {
               { label: 'none', value: 'none' },
               { label: 'isNotEmpty', value: 'isNotEmpty' },
               { label: 'isEmail', value: 'isEmail' },
-              { label: 'isInRange', value: 'isInRange' },
-              { label: 'hasLength', value: 'hasLength' },
-              { label: 'matches', value: 'matches' },
+              // { label: 'isInRange', value: 'isInRange' },
+              // { label: 'hasLength', value: 'hasLength' },
+              // { label: 'matches', value: 'matches' },
             ]}
-            defaultValue={'none'}
-          />
-
-          <TextInput
-            label="errorMessage"
-            value={current.data?.text}
-            onChange={(e) =>
-              projectCtx.setSingleItem(current.id, { text: e.target.value })
+            value={current.data?.validateType || 'none'}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, { validateType: value! })
             }
           />
+
+          {(current.data?.validateType || 'none') !== 'none' && (
+            <TextInput
+              label="errorMessage"
+              value={current.data?.errorMessage}
+              onChange={(e) =>
+                projectCtx.setSingleItem(current.id, {
+                  errorMessage: e.target.value,
+                })
+              }
+            />
+          )}
         </Stack>
       </Accordion.Panel>
     </Accordion.Item>
