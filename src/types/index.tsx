@@ -20,6 +20,8 @@ interface FormFieldItem {
   withAsterisk?: boolean;
   readonly?: boolean;
   disabled?: boolean;
+  buttonVariant?: string;
+  buttonType?: string;
 
   // layout
   direction?: string;
@@ -103,6 +105,7 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
         type: 'Button',
         name: 'cancel',
         label: 'Cancel',
+        buttonVariant: 'outline',
       },
     },
     {
@@ -114,6 +117,8 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
         type: 'Button',
         name: 'submit',
         label: 'Submit',
+        buttonVariant: 'gradient',
+        buttonType: 'submit',
       },
     },
   ];

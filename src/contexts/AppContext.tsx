@@ -19,6 +19,9 @@ export interface AppContextProps {
   themes: Array<{ label: string; value: string }>;
   languages: Array<{ label: string; value: string }>;
 
+  codeType: string;
+  setCodeType: React.Dispatch<React.SetStateAction<string>>;
+
   formFieldItems: DNDTreeFormFieldItem[];
   setFormFieldItems: React.Dispatch<
     React.SetStateAction<DNDTreeFormFieldItem[]>
@@ -47,6 +50,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<string>('Ready');
   const [userId, setUserId] = useState<string>('');
+
+  const [codeType, setCodeType] = useState<string>('form');
 
   const [formFieldItems, setFormFieldItems] = useState<DNDTreeFormFieldItem[]>(
     defaultFormFieldItems(),
@@ -115,6 +120,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
           { label: '繁體中文', value: 'zhHant' },
           { label: '简体中文', value: 'zhHans' },
         ],
+
+        codeType,
+        setCodeType,
 
         formFieldItems,
         setFormFieldItems,

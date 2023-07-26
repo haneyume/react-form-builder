@@ -114,10 +114,22 @@ const RenderField = ({
         <Slider label={item.data.label} placeholder={item.data.placeholder} />
       );
     case 'Button':
-      return <Button variant="light">{item.data.label}</Button>;
+      return (
+        <Button
+          variant={item.data.buttonVariant}
+          type={item.data.buttonType as any}
+        >
+          {item.data.label}
+        </Button>
+      );
     case 'Flex':
       return (
-        <Flex align={item.data.align} justify={item.data.justify}>
+        <Flex
+          direction={item.data.direction as any}
+          wrap={item.data.wrap as any}
+          align={item.data.align}
+          justify={item.data.justify}
+        >
           {children.map((child) => (
             <RenderField key={child.id} item={child} allItems={allItems} />
           ))}

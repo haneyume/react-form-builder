@@ -90,6 +90,8 @@
 | Prop Name | Type   |
 | --------- | ------ |
 | label     | string |
+| variant   | string |
+| type      | string |
 
 ### Flex
 

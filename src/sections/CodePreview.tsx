@@ -17,14 +17,7 @@ export const CodePreview = () => {
   const [code, setCode] = useState<string>('');
 
   useEffect(() => {
-    let _code = projectCtx.formFieldItems
-      .filter((item) => item.parent === 'root')
-      .map((item) => {
-        return genFieldCode(item, projectCtx.formFieldItems);
-      })
-      .join('\n');
-
-    _code = genComponentCode(projectCtx.formFieldItems, _code);
+    let _code = genCode(projectCtx.formFieldItems);
 
     prettier
       .format(_code, {
@@ -41,7 +34,6 @@ export const CodePreview = () => {
       height="100%"
       theme="vs-dark"
       defaultLanguage="typescript"
-      // defaultValue="// some comment"
       options={{}}
       value={code}
       beforeMount={(monaco) => {
@@ -52,6 +44,48 @@ export const CodePreview = () => {
       }}
     />
   );
+};
+
+const genCode = (allItems: DNDTreeFormFieldItem[]) => {
+  const importCode = genImportCode();
+
+  const fieldCode = allItems
+    .filter((item) => item.parent === 'root')
+    .map((item) => {
+      return genFieldCode(item, allItems);
+    })
+    .join('\n');
+
+  const componentCode = genComponentCode(allItems, fieldCode);
+
+  return importCode + componentCode;
+};
+
+const genImportCode = () => {
+  return `import React from 'react';
+  import {
+    // Form fields
+    TextInput,
+    NumberInput,
+    PasswordInput,
+    Checkbox,
+    Select,
+    Textarea,
+    Button,
+  
+    // Layouts
+    Group,
+    Stack,
+    SimpleGrid,
+    Card,
+  
+    // Typography
+    Text,
+    Title,
+  } from '@mantine/core';
+  import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
+
+`;
 };
 
 const genComponentCode = (
@@ -90,30 +124,7 @@ const genComponentCode = (
     })
     .join('\n');
 
-  return `import React from 'react';
-import {
-  // Form fields
-  TextInput,
-  NumberInput,
-  PasswordInput,
-  Checkbox,
-  Select,
-  Textarea,
-  Button,
-
-  // Layouts
-  Group,
-  Stack,
-  SimpleGrid,
-  Card,
-
-  // Typography
-  Text,
-  Title,
-} from '@mantine/core';
-import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
-
-export const Form = () => {
+  return `const Form = () => {
   const form = useForm({
     initialValues: {
       ${initialValues}
@@ -124,7 +135,12 @@ export const Form = () => {
   });
 
   return (
-    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+    <form
+      onSubmit={form.onSubmit((values) => {
+        // TODO: Submit form
+        console.log(values);
+      })}
+    >
       <Stack>
         ${children}
       </Stack>
@@ -141,114 +157,160 @@ const genFieldCode = (
   const uuid = item.id;
   const children = allItems.filter((child) => child.parent === uuid);
 
+  const {
+    // Form fields
+    name,
+    label,
+    placeholder,
+    withAsterisk,
+    readonly,
+    disabled,
+    buttonVariant,
+    buttonType,
+
+    // Layouts
+    direction,
+    wrap,
+    align,
+    justify,
+    position,
+    grow,
+    cols,
+    withBorder,
+
+    // Text
+    text,
+    order,
+  } = item.data!;
+
   switch (item.data?.type) {
     case 'TextInput':
       return `
         <TextInput
-          label="${item.data.label}"
-          placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.withAsterisk}}
-          {...form.getInputProps('${item.data.name}')}
+          ${label ? `label={'${label}'}` : ''}
+          ${placeholder ? `placeholder={'${placeholder}'}` : ''}
+          ${withAsterisk ? `withAsterisk` : ''}
+          {...form.getInputProps('${name}')}
         />
       `;
     case 'NumberInput':
       return `
         <NumberInput
-          label="${item.data.label}"
-          placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.withAsterisk}}
-          {...form.getInputProps('${item.data.name}')}
+          ${label ? `label={'${label}'}` : ''}
+          ${placeholder ? `placeholder={'${placeholder}'}` : ''}
+          ${withAsterisk ? `withAsterisk` : ''}
+          {...form.getInputProps('${name}')}
         />
       `;
     case 'PasswordInput':
       return `
         <PasswordInput
-          label="${item.data.label}"
-          placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.withAsterisk}}
-          {...form.getInputProps('${item.data.name}')}
+          ${label ? `label={'${label}'}` : ''}
+          ${placeholder ? `placeholder={'${placeholder}'}` : ''}
+          ${withAsterisk ? `withAsterisk` : ''}
+          {...form.getInputProps('${name}')}
         />
       `;
     case 'Checkbox':
       return `
         <Checkbox
-          label="${item.data.label}"
-          placeholder="${item.data.placeholder}"
-          {...form.getInputProps('${item.data.name}', { type: 'checkbox' })}
+          ${label ? `label={'${label}'}` : ''}
+          ${placeholder ? `placeholder={'${placeholder}'}` : ''}
+          {...form.getInputProps('${name}', { type: 'checkbox' })}
         />
       `;
     case 'Select':
       return `
         <Select
-          label="${item.data.label}"
-          placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.withAsterisk}}
+          ${label ? `label={'${label}'}` : ''}
+          ${placeholder ? `placeholder={'${placeholder}'}` : ''}
+          ${withAsterisk ? `withAsterisk` : ''}
           data={[]}
-          {...form.getInputProps('${item.data.name}')}
+          {...form.getInputProps('${name}')}
         />
       `;
     case 'Textarea':
       return `
         <Textarea
-          label="${item.data.label}"
-          placeholder="${item.data.placeholder}"
-          withAsterisk={${item.data.withAsterisk}}
-          {...form.getInputProps('${item.data.name}')}
+          ${label ? `label={'${label}'}` : ''}
+          ${placeholder ? `placeholder={'${placeholder}'}` : ''}
+          ${withAsterisk ? `withAsterisk` : ''}
+          {...form.getInputProps('${name}')}
         />
       `;
     case 'Slider':
       return `
           <Slider
-            label="${item.data.label}"
-            {...form.getInputProps('${item.data.name}')}
+            ${label ? `label={'${label}'}` : ''}
+            {...form.getInputProps('${name}')}
           />
         `;
     case 'Button':
       return `
-        <Button>${item.data.label}</Button>
+        <Button
+          ${buttonVariant ? `variant={'${buttonVariant}'}` : ''}
+          ${buttonType ? `type={'${buttonType}'}` : ''}
+        >
+          ${label}
+        </Button>
       `;
     case 'Flex':
       return `
-        <Flex>
+        <Flex
+          ${direction ? `direction={'${direction}'}` : ''}
+          ${wrap ? `wrap={'${wrap}'}` : ''}
+          ${align ? `align={'${align}'}` : ''}
+          ${justify ? `justify={'${justify}'}` : ''}
+        >
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Flex>
       `;
     case 'Group':
       return `
-        <Group>
+        <Group
+          ${position ? `position={'${position}'}` : ''}
+          ${grow ? `grow` : ''}
+        >
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Group>
       `;
     case 'Stack':
       return `
-        <Stack>
+        <Stack
+          ${align ? `align={'${align}'}` : ''}
+          ${justify ? `justify={'${justify}'}` : ''}
+        >
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Stack>
       `;
     case 'SimpleGrid':
       return `
-        <SimpleGrid>
+        <SimpleGrid
+          ${cols ? `cols={${cols}}` : ''}
+        >
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </SimpleGrid>
       `;
     case 'Card':
       return `
-        <Card>
+        <Card
+          ${withBorder ? `withBorder` : ''}
+        >
           ${children.map((child) => genFieldCode(child, allItems)).join('\n')}
         </Card>
       `;
     case 'Text':
       return `
           <Text>
-            ${item.data.text}
+            ${text}
           </Text>
         `;
     case 'Title':
       return `
           <Title
-            order={${item.data.order}}
+            ${order ? `order={${order}}` : ''}
           >
-            ${item.data.text}
+            ${text}
           </Title>
         `;
     default:

@@ -9,6 +9,7 @@ import {
   Accordion,
   Checkbox,
   Slider,
+  Text,
 } from '@mantine/core';
 
 import { AppContext } from '../contexts';
@@ -486,6 +487,36 @@ const ButtonPanel = () => {
               projectCtx.setSingleItem(current.id, { label: e.target.value })
             }
           />
+
+          <Select
+            label="variant"
+            data={[
+              'default',
+              'outline',
+              'white',
+              'light',
+              'filled',
+              'gradient',
+              'subtle',
+            ]}
+            value={current.data?.buttonVariant}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                buttonVariant: value!,
+              })
+            }
+          />
+
+          <Select
+            label="type"
+            data={['button', 'submit', 'reset']}
+            value={current.data?.buttonType}
+            onChange={(value) =>
+              projectCtx.setSingleItem(current.id, {
+                buttonType: value!,
+              })
+            }
+          />
         </Stack>
       </Accordion.Panel>
     </Accordion.Item>
@@ -752,6 +783,7 @@ const TitlePanel = () => {
             }
           />
 
+          <Text size={'0.875rem'}>order</Text>
           <Slider
             label="order"
             min={1}
