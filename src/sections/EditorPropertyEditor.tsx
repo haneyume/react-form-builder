@@ -16,6 +16,7 @@ import { AppContext } from '../contexts';
 
 import {
   PropertySection,
+  PropertySectionWithLabelCheck,
   PropertyFieldString,
   PropertyFieldBoolean,
   PropertyFieldEnum,
@@ -47,9 +48,9 @@ const JustifyContent = [
 
 export const EditorPropertyEditor = () => {
   const defaultValue = [
-    'FormFieldGeneral',
-    'LayoutGeneral',
-    'TextGeneral',
+    'Form Field',
+    'Layout',
+    'Typography',
     ...formFieldTypes,
     ...layoutTypes,
     ...textTypes,
@@ -99,23 +100,18 @@ const FormFieldGeneralPanel = () => {
   }
 
   return (
-    <Accordion.Item value="FormFieldGeneral">
-      <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <TextInput label="name" value={current.data?.name} disabled />
+    <PropertySection label="Form Field">
+      <TextInput label="name" value={current.data?.name} disabled />
 
-          <Select
-            label="type"
-            data={formFieldTypes}
-            value={current.data?.type}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, { type: value! })
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+      <Select
+        label="type"
+        data={formFieldTypes}
+        value={current.data?.type}
+        onChange={(value) =>
+          projectCtx.setSingleItem(current.id, { type: value! })
+        }
+      />
+    </PropertySection>
   );
 };
 
@@ -130,27 +126,22 @@ const LayoutGeneralPanel = () => {
   }
 
   return (
-    <Accordion.Item value="LayoutGeneral">
-      <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Select
-            label="type"
-            data={layoutTypes}
-            value={current.data?.type}
-            onChange={(value) =>
-              projectCtx.setSingleItem(
-                current.id,
-                {
-                  type: value!,
-                },
-                value!,
-              )
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Layout">
+      <Select
+        label="type"
+        data={layoutTypes}
+        value={current.data?.type}
+        onChange={(value) =>
+          projectCtx.setSingleItem(
+            current.id,
+            {
+              type: value!,
+            },
+            value!,
+          )
+        }
+      />
+    </PropertySection>
   );
 };
 
@@ -165,92 +156,87 @@ const TextGeneralPanel = () => {
   }
 
   return (
-    <Accordion.Item value="TextGeneral">
-      <Accordion.Control className="bg-neutral-800">General</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Select
-            label="type"
-            data={textTypes}
-            value={current.data?.type}
-            onChange={(value) =>
-              projectCtx.setSingleItem(
-                current.id,
-                {
-                  type: value!,
-                },
-                value!,
-              )
-            }
-          />
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+    <PropertySection label="Typography">
+      <Select
+        label="type"
+        data={textTypes}
+        value={current.data?.type}
+        onChange={(value) =>
+          projectCtx.setSingleItem(
+            current.id,
+            {
+              type: value!,
+            },
+            value!,
+          )
+        }
+      />
+    </PropertySection>
   );
 };
 
 const TextInputPanel = () => {
   return (
-    <PropertySection label="TextInput">
+    <PropertySectionWithLabelCheck label="TextInput">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
       <PropertyFieldBoolean field="withAsterisk" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const NumberInputPanel = () => {
   return (
-    <PropertySection label="NumberInput">
+    <PropertySectionWithLabelCheck label="NumberInput">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
       <PropertyFieldBoolean field="withAsterisk" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const PasswordInputPanel = () => {
   return (
-    <PropertySection label="PasswordInput">
+    <PropertySectionWithLabelCheck label="PasswordInput">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
       <PropertyFieldBoolean field="withAsterisk" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const CheckboxPanel = () => {
   return (
-    <PropertySection label="Checkbox">
+    <PropertySectionWithLabelCheck label="Checkbox">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const SelectPanel = () => {
   return (
-    <PropertySection label="Select">
+    <PropertySectionWithLabelCheck label="Select">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
       <PropertyFieldBoolean field="withAsterisk" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const TextareaPanel = () => {
   return (
-    <PropertySection label="Textarea">
+    <PropertySectionWithLabelCheck label="Textarea">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
       <PropertyFieldBoolean field="withAsterisk" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const ButtonPanel = () => {
   return (
-    <PropertySection label="Button">
+    <PropertySectionWithLabelCheck label="Button">
       <PropertyFieldString field="label" />
       <PropertyFieldEnum
         field="buttonVariant"
@@ -268,63 +254,63 @@ const ButtonPanel = () => {
         field="buttonType"
         data={['button', 'submit', 'reset']}
       />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const FlexPanel = () => {
   return (
-    <PropertySection label="Flex">
+    <PropertySectionWithLabelCheck label="Flex">
       <PropertyFieldEnum field="direction" data={FlexDirection} />
       <PropertyFieldEnum field="wrap" data={FlexWrap} />
       <PropertyFieldEnum field="align" data={AlignItems} />
       <PropertyFieldEnum field="justify" data={JustifyContent} />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const GroupPanel = () => {
   return (
-    <PropertySection label="Group">
+    <PropertySectionWithLabelCheck label="Group">
       <PropertyFieldEnum
         field="position"
         data={['left', 'center', 'right', 'apart']}
       />
       <PropertyFieldBoolean field="grow" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const StackPanel = () => {
   return (
-    <PropertySection label="Stack">
+    <PropertySectionWithLabelCheck label="Stack">
       <PropertyFieldEnum field="align" data={AlignItems} />
       <PropertyFieldEnum field="justify" data={JustifyContent} />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const SimpleGridPanel = () => {
   return (
-    <PropertySection label="SimpleGrid">
+    <PropertySectionWithLabelCheck label="SimpleGrid">
       <PropertyFieldNumber field="cols" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const CardPanel = () => {
   return (
-    <PropertySection label="Card">
+    <PropertySectionWithLabelCheck label="Card">
       <PropertyFieldBoolean field="withBorder" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
 const TextPanel = () => {
   return (
-    <PropertySection label="Text">
+    <PropertySectionWithLabelCheck label="Text">
       <PropertyFieldString field="text" />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
@@ -339,7 +325,7 @@ const TitlePanel = () => {
   }
 
   return (
-    <PropertySection label="Title">
+    <PropertySectionWithLabelCheck label="Title">
       <PropertyFieldString field="text" />
 
       <Text size={'0.875rem'}>order</Text>
@@ -355,7 +341,7 @@ const TitlePanel = () => {
           })
         }
       />
-    </PropertySection>
+    </PropertySectionWithLabelCheck>
   );
 };
 
@@ -372,41 +358,34 @@ const ValidationPanel = () => {
   }
 
   return (
-    <Accordion.Item value="Validation">
-      <Accordion.Control className="bg-neutral-800">
-        Validation
-      </Accordion.Control>
-      <Accordion.Panel>
-        <Stack>
-          <Select
-            label="Validate"
-            data={[
-              { label: 'none', value: 'none' },
-              { label: 'isNotEmpty', value: 'isNotEmpty' },
-              { label: 'isEmail', value: 'isEmail' },
-              // { label: 'isInRange', value: 'isInRange' },
-              // { label: 'hasLength', value: 'hasLength' },
-              // { label: 'matches', value: 'matches' },
-            ]}
-            value={current.data?.validateType || 'none'}
-            onChange={(value) =>
-              projectCtx.setSingleItem(current.id, { validateType: value! })
-            }
-          />
+    <PropertySection label="Validation">
+      <Select
+        label="Validate"
+        data={[
+          { label: 'none', value: 'none' },
+          { label: 'isNotEmpty', value: 'isNotEmpty' },
+          { label: 'isEmail', value: 'isEmail' },
+          // { label: 'isInRange', value: 'isInRange' },
+          // { label: 'hasLength', value: 'hasLength' },
+          // { label: 'matches', value: 'matches' },
+        ]}
+        value={current.data?.validateType || 'none'}
+        onChange={(value) =>
+          projectCtx.setSingleItem(current.id, { validateType: value! })
+        }
+      />
 
-          {(current.data?.validateType || 'none') !== 'none' && (
-            <TextInput
-              label="errorMessage"
-              value={current.data?.errorMessage}
-              onChange={(e) =>
-                projectCtx.setSingleItem(current.id, {
-                  errorMessage: e.target.value,
-                })
-              }
-            />
-          )}
-        </Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
+      {(current.data?.validateType || 'none') !== 'none' && (
+        <TextInput
+          label="errorMessage"
+          value={current.data?.errorMessage}
+          onChange={(e) =>
+            projectCtx.setSingleItem(current.id, {
+              errorMessage: e.target.value,
+            })
+          }
+        />
+      )}
+    </PropertySection>
   );
 };

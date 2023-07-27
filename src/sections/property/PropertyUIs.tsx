@@ -21,6 +21,23 @@ export const PropertySection = ({
   label: string;
   children: ReactNode;
 }) => {
+  return (
+    <Accordion.Item value={label}>
+      <Accordion.Control className="bg-neutral-800">{label}</Accordion.Control>
+      <Accordion.Panel>
+        <Stack>{children}</Stack>
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
+
+export const PropertySectionWithLabelCheck = ({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) => {
   const projectCtx = useContext(AppContext);
 
   const current = projectCtx.currentFormFieldItem;
@@ -30,14 +47,7 @@ export const PropertySection = ({
     return null;
   }
 
-  return (
-    <Accordion.Item value={label}>
-      <Accordion.Control className="bg-neutral-800">{label}</Accordion.Control>
-      <Accordion.Panel>
-        <Stack>{children}</Stack>
-      </Accordion.Panel>
-    </Accordion.Item>
-  );
+  return <PropertySection label={label}>{children}</PropertySection>;
 };
 
 export const PropertyFieldString = ({
