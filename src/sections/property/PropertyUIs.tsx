@@ -128,8 +128,16 @@ export const PropertyFieldEnum = ({
 
 export const PropertyFieldNumber = ({
   field,
+  min,
+  max,
+  step,
+  component = 'NumberInput',
 }: {
   field: keyof FormFieldItem;
+  min?: number;
+  max?: number;
+  step?: number;
+  component?: 'NumberInput' | 'Slider';
 }) => {
   const projectCtx = useContext(AppContext);
 
@@ -138,15 +146,40 @@ export const PropertyFieldNumber = ({
     return null;
   }
 
-  return (
-    <NumberInput
-      label={field}
-      value={current.data?.[field] as number}
-      onChange={(value) =>
-        projectCtx.setSingleItem(current.id, {
-          [field]: Number(value),
-        })
-      }
-    />
-  );
+  if (component === 'NumberInput') {
+    return (
+      <NumberInput
+        label={field}
+        min={min}
+        max={max}
+        step={step}
+        value={current.data?.[field] as number}
+        onChange={(value) =>
+          projectCtx.setSingleItem(current.id, {
+            [field]: Number(value),
+          })
+        }
+      />
+    );
+  } else if (component === 'Slider') {
+    return (
+      <>
+        <Text size={'0.875rem'}>{field}</Text>
+        <Slider
+          label={field}
+          min={min}
+          max={max}
+          step={step}
+          value={current.data?.[field] as number}
+          onChange={(value) =>
+            projectCtx.setSingleItem(current.id, {
+              [field]: Number(value),
+            })
+          }
+        />
+      </>
+    );
+  }
+
+  return <div />;
 };

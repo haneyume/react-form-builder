@@ -1,7 +1,11 @@
 import { useState, useMemo, ReactNode, createContext } from 'react';
 
-import type { DNDTreeFormFieldItem, FormFieldItem } from '../types';
-import { defaultFormFieldItems } from '../types';
+import type {
+  DNDTreeFormFieldItem,
+  FormFieldItem,
+  GlobalState,
+} from '../types';
+import { defaultFormFieldItems, defaultGlobalState } from '../types';
 
 export interface AppContextProps {
   initialized: boolean;
@@ -21,6 +25,9 @@ export interface AppContextProps {
 
   codeType: string;
   setCodeType: React.Dispatch<React.SetStateAction<string>>;
+
+  globalState: GlobalState;
+  setGlobalState: React.Dispatch<React.SetStateAction<GlobalState>>;
 
   formFieldItems: DNDTreeFormFieldItem[];
   setFormFieldItems: React.Dispatch<
@@ -52,6 +59,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [userId, setUserId] = useState<string>('');
 
   const [codeType, setCodeType] = useState<string>('form');
+
+  const [globalState, setGlobalState] = useState<GlobalState>(
+    defaultGlobalState(),
+  );
 
   const [formFieldItems, setFormFieldItems] = useState<DNDTreeFormFieldItem[]>(
     defaultFormFieldItems(),
@@ -123,6 +134,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         codeType,
         setCodeType,
+
+        globalState,
+        setGlobalState,
 
         formFieldItems,
         setFormFieldItems,

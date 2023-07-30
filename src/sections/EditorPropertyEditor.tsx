@@ -1,16 +1,6 @@
 import { useContext } from 'react';
 
-import {
-  Stack,
-  ScrollArea,
-  Select,
-  TextInput,
-  NumberInput,
-  Accordion,
-  Checkbox,
-  Slider,
-  Text,
-} from '@mantine/core';
+import { Stack, ScrollArea, Select, TextInput, Accordion } from '@mantine/core';
 
 import { AppContext } from '../contexts';
 
@@ -315,31 +305,15 @@ const TextPanel = () => {
 };
 
 const TitlePanel = () => {
-  const projectCtx = useContext(AppContext);
-
-  const current = projectCtx.currentFormFieldItem;
-  if (!current) {
-    return null;
-  } else if (current.data?.type !== 'Title') {
-    return null;
-  }
-
   return (
     <PropertySectionWithLabelCheck label="Title">
       <PropertyFieldString field="text" />
-
-      <Text size={'0.875rem'}>order</Text>
-      <Slider
-        label="order"
+      <PropertyFieldNumber
+        field="order"
         min={1}
         max={6}
         step={1}
-        value={current.data?.order}
-        onChange={(value) =>
-          projectCtx.setSingleItem(current.id, {
-            order: Number(value),
-          })
-        }
+        component="Slider"
       />
     </PropertySectionWithLabelCheck>
   );
