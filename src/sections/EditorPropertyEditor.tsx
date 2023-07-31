@@ -12,6 +12,7 @@ import {
   PropertyFieldEnum,
   PropertyFieldNumber,
 } from './property/FormFieldPropertyUIs';
+import { PropertyListItems } from './property/PropertyListItems';
 
 const formFieldTypes = [
   'TextInput',
@@ -209,7 +210,7 @@ const SelectPanel = () => {
     <PropertySectionWithLabelCheck label="Select">
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
-      <PropertyFieldBoolean field="withAsterisk" />
+      <PropertyListItems />
     </PropertySectionWithLabelCheck>
   );
 };

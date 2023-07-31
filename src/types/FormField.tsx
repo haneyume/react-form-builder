@@ -23,6 +23,7 @@ interface FormFieldItem {
   autosize?: boolean;
   minRows?: number;
   maxRows?: number;
+  data?: { label: string; value: string }[];
   buttonVariant?: string;
   buttonType?: string;
 

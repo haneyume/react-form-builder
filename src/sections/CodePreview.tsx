@@ -168,6 +168,7 @@ const genFieldCode = (
     autosize,
     minRows,
     maxRows,
+    data,
     buttonVariant,
     buttonType,
 
@@ -228,7 +229,7 @@ const genFieldCode = (
           ${label ? `label={'${label}'}` : ''}
           ${placeholder ? `placeholder={'${placeholder}'}` : ''}
           ${withAsterisk ? `withAsterisk` : ''}
-          data={[]}
+          ${data ? `data={${JSON.stringify(data)}}` : ''}
           {...form.getInputProps('${name}')}
         />
       `;

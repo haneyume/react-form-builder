@@ -18,7 +18,7 @@ export const HomePage = () => {
         <EditorPreview />
       </Allotment.Pane>
 
-      <Allotment.Pane preferredSize={250}>
+      <Allotment.Pane preferredSize={400}>
         <EditorPropertyEditor />
       </Allotment.Pane>
     </Allotment>

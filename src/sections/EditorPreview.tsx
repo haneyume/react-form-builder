@@ -98,7 +98,7 @@ const RenderField = ({
           label={item.data.label}
           placeholder={item.data.placeholder}
           withAsterisk={item.data.withAsterisk}
-          data={[]}
+          data={item.data.data ?? []}
         />
       );
     case 'Textarea':
