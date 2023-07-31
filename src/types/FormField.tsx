@@ -20,6 +20,9 @@ interface FormFieldItem {
   withAsterisk?: boolean;
   readonly?: boolean;
   disabled?: boolean;
+  autosize?: boolean;
+  minRows?: number;
+  maxRows?: number;
   buttonVariant?: string;
   buttonType?: string;
 

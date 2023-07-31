@@ -220,6 +220,9 @@ const TextareaPanel = () => {
       <PropertyFieldString field="label" />
       <PropertyFieldString field="placeholder" />
       <PropertyFieldBoolean field="withAsterisk" />
+      <PropertyFieldBoolean field="autosize" />
+      <PropertyFieldNumber field="minRows" />
+      <PropertyFieldNumber field="maxRows" />
     </PropertySectionWithLabelCheck>
   );
 };

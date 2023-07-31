@@ -107,6 +107,9 @@ const RenderField = ({
           label={item.data.label}
           placeholder={item.data.placeholder}
           withAsterisk={item.data.withAsterisk}
+          autosize={item.data.autosize}
+          minRows={item.data.minRows}
+          maxRows={item.data.maxRows}
         />
       );
     case 'Slider':

@@ -165,6 +165,9 @@ const genFieldCode = (
     withAsterisk,
     readonly,
     disabled,
+    autosize,
+    minRows,
+    maxRows,
     buttonVariant,
     buttonType,
 
@@ -235,6 +238,9 @@ const genFieldCode = (
           ${label ? `label={'${label}'}` : ''}
           ${placeholder ? `placeholder={'${placeholder}'}` : ''}
           ${withAsterisk ? `withAsterisk` : ''}
+          ${autosize ? `autosize` : ''}
+          ${minRows ? `minRows={${minRows}}` : ''}
+          ${maxRows ? `maxRows={${maxRows}}` : ''}
           {...form.getInputProps('${name}')}
         />
       `;
