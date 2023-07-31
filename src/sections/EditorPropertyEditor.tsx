@@ -11,7 +11,7 @@ import {
   PropertyFieldBoolean,
   PropertyFieldEnum,
   PropertyFieldNumber,
-} from './property/PropertyUIs';
+} from './property/FormFieldPropertyUIs';
 
 const formFieldTypes = [
   'TextInput',

@@ -6,7 +6,7 @@ import { CodeSidebar, CodePreview } from '../sections';
 export const CodePage = () => {
   return (
     <Allotment>
-      <Allotment.Pane preferredSize={200}>
+      <Allotment.Pane preferredSize={250}>
         <CodeSidebar />
       </Allotment.Pane>
 

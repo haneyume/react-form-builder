@@ -1,7 +1,13 @@
-interface GlobalState {}
+interface GlobalState {
+  codeType: string;
+  modalButtonType: string;
+}
 
 export type { GlobalState };
 
 export const defaultGlobalState: () => GlobalState = () => {
-  return {};
+  return {
+    codeType: 'form',
+    modalButtonType: 'button',
+  };
 };
