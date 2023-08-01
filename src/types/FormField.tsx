@@ -75,6 +75,8 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
         label: 'Username',
         placeholder: 'Enter your username',
         withAsterisk: true,
+        validateType: 'isEmail',
+        errorMessage: 'Please enter a valid email address',
       },
     },
     {
@@ -88,6 +90,8 @@ export const defaultFormFieldItems: () => DNDTreeFormFieldItem[] = () => {
         label: 'Password',
         placeholder: 'Enter your password',
         withAsterisk: true,
+        validateType: 'isNotEmpty',
+        errorMessage: 'Please enter a valid password',
       },
     },
     {

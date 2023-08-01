@@ -9,7 +9,7 @@ import prettierPluginBabel from 'prettier/plugins/babel';
 import prettierPluginEstree from 'prettier/plugins/estree';
 
 import { AppContext } from '../contexts';
-import type { DNDTreeFormFieldItem } from '../types';
+import type { DNDTreeFormFieldItem, GlobalState } from '../types';
 
 export const CodePreview = () => {
   const projectCtx = useContext(AppContext);
@@ -17,7 +17,9 @@ export const CodePreview = () => {
   const [code, setCode] = useState<string>('');
 
   useEffect(() => {
-    let _code = genCode(projectCtx.formFieldItems);
+    let _code = genCode(projectCtx.formFieldItems, projectCtx.globalState);
+
+    // console.log(_code);
 
     prettier
       .format(_code, {
@@ -27,7 +29,7 @@ export const CodePreview = () => {
       .then((formattedCode) => {
         setCode(formattedCode);
       });
-  }, []);
+  }, [projectCtx.globalState]);
 
   return (
     <Editor
@@ -46,51 +48,78 @@ export const CodePreview = () => {
   );
 };
 
-const genCode = (allItems: DNDTreeFormFieldItem[]) => {
-  const importCode = genImportCode(allItems);
+const genCode = (
+  allItems: DNDTreeFormFieldItem[],
+  globalState: GlobalState,
+) => {
+  const { codeType, modalButtonType } = globalState;
 
-  const fieldCode = allItems
+  const importCode = genImportCode(allItems, codeType, modalButtonType);
+  const hookCode = genHookCode(allItems, codeType);
+
+  const formFieldCode = allItems
     .filter((item) => item.parent === 'root')
     .map((item) => {
       return genFieldCode(item, allItems);
     })
     .join('\n');
 
-  const componentCode = genComponentCode(allItems, fieldCode);
+  const componentCode = genComponentCode(
+    hookCode,
+    formFieldCode,
+    codeType,
+    modalButtonType,
+  );
 
   return importCode + componentCode;
 };
 
-const genImportCode = (allItems: DNDTreeFormFieldItem[]) => {
+const genImportCode = (
+  allItems: DNDTreeFormFieldItem[],
+  codeType: string,
+  modalButtonType: string,
+) => {
   // Extract all import @mantine/core code
   let importMantineCore = allItems
     .filter((item) => item.data?.type)
     .map((item) => item.data?.type);
-  importMantineCore = [...importMantineCore, 'Stack'].sort();
-  importMantineCore = [...new Set(importMantineCore)];
+  if (codeType === 'modal' && modalButtonType === 'button') {
+    importMantineCore = [...importMantineCore, 'Modal', 'Button'];
+  }
+  if (codeType === 'modal' && modalButtonType === 'icon') {
+    importMantineCore = [...importMantineCore, 'Modal', 'ActionIcon'];
+  }
+  importMantineCore = [...importMantineCore, 'Stack'];
+  importMantineCore = [...new Set(importMantineCore)].sort();
 
   // Extract all import @mantine/form code
   let importMantineForm = allItems
     .filter((item) => item.data?.validateType)
-    .map((item) => item.data?.validateType)
-    .sort();
-  importMantineForm = [...new Set(importMantineForm)];
+    .map((item) => item.data?.validateType);
+  importMantineForm = [...new Set(importMantineForm)].sort();
   importMantineForm = ['useForm', ...importMantineForm];
 
-  return `import React from 'react';
-  import {
-    ${importMantineCore.join(',')}
-  } from '@mantine/core';
-  import {
-    ${importMantineForm.join(',')}
-  } from '@mantine/form';
+  let result = '';
 
-`;
+  if (importMantineCore.length > 0) {
+    result += `import {${importMantineCore.join(',')}} from '@mantine/core';\n`;
+  }
+  if (importMantineForm.length > 0) {
+    result += `import {${importMantineForm.join(',')}} from '@mantine/form';\n`;
+  }
+  if (codeType === 'modal') {
+    result += `import { useDisclosure } from '@mantine/hooks';\n`;
+  }
+  if (codeType === 'modal' && modalButtonType === 'icon') {
+    result += `import { IconSettings } from '@tabler/icons-react';\n`;
+  }
+
+  return result + '\n';
 };
 
-const genComponentCode = (
+const genHookCode = (
   allItems: DNDTreeFormFieldItem[],
-  children: string,
+  codeType: string,
 ): string => {
   // Extract all form initial values code
   const initialValues = allItems
@@ -126,7 +155,13 @@ const genComponentCode = (
     })
     .join('\n');
 
-  return `const Form = () => {
+  let modalHookCode = '';
+  if (codeType === 'modal') {
+    modalHookCode =
+      'const [opened, { open, close }] = useDisclosure(false);\n\n';
+  }
+
+  const formHookCode = `
   const form = useForm({
     initialValues: {
       ${initialValues}
@@ -134,7 +169,20 @@ const genComponentCode = (
     validate: {
       ${validate}
     },
-  });
+  });\n`;
+
+  return modalHookCode + formHookCode;
+};
+
+const genComponentCode = (
+  hookCode: string,
+  formFieldCode: string,
+  codeType: string,
+  modalButtonType: string,
+): string => {
+  if (codeType === 'form') {
+    return `export const Form = () => {
+  ${hookCode}
 
   return (
     <form
@@ -144,12 +192,55 @@ const genComponentCode = (
       })}
     >
       <Stack>
-        ${children}
+        ${formFieldCode}
       </Stack>
     </form>
   );
 };  
 `;
+  } else if (codeType === 'modal') {
+    let buttonCode = '';
+    if (modalButtonType === 'button') {
+      buttonCode = `<Button variant="light" onClick={open}>Open modal</Button>`;
+    } else if (modalButtonType === 'icon') {
+      buttonCode = `<ActionIcon onClick={open}>
+      <IconSettings size="1.125rem" />
+      </ActionIcon>`;
+    }
+
+    return `export const Modal = () => {
+  ${hookCode}
+
+  return (
+    <>
+      ${buttonCode}
+
+      <Model
+        opened={opened}
+        onClose={close}
+        title="Modal title"
+        centered
+      >
+        <form
+          onSubmit={form.onSubmit((values) => {
+            // TODO: Submit form
+            console.log(values);
+
+            close();
+          })}
+        >
+          <Stack>
+            ${formFieldCode}
+          </Stack>
+        </form>
+      </Model>
+    </>
+  );
+};  
+`;
+  }
+
+  return '';
 };
 
 const genFieldCode = (
@@ -165,8 +256,8 @@ const genFieldCode = (
     label,
     placeholder,
     withAsterisk,
-    readonly,
-    disabled,
+    // readonly,
+    // disabled,
     autosize,
     minRows,
     maxRows,
