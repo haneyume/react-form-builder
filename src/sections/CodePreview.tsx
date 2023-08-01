@@ -47,7 +47,7 @@ export const CodePreview = () => {
 };
 
 const genCode = (allItems: DNDTreeFormFieldItem[]) => {
-  const importCode = genImportCode();
+  const importCode = genImportCode(allItems);
 
   const fieldCode = allItems
     .filter((item) => item.parent === 'root')
@@ -61,29 +61,29 @@ const genCode = (allItems: DNDTreeFormFieldItem[]) => {
   return importCode + componentCode;
 };
 
-const genImportCode = () => {
+const genImportCode = (allItems: DNDTreeFormFieldItem[]) => {
+  // Extract all import @mantine/core code
+  let importMantineCore = allItems
+    .filter((item) => item.data?.type)
+    .map((item) => item.data?.type);
+  importMantineCore = [...importMantineCore, 'Stack'].sort();
+  importMantineCore = [...new Set(importMantineCore)];
+
+  // Extract all import @mantine/form code
+  let importMantineForm = allItems
+    .filter((item) => item.data?.validateType)
+    .map((item) => item.data?.validateType)
+    .sort();
+  importMantineForm = [...new Set(importMantineForm)];
+  importMantineForm = ['useForm', ...importMantineForm];
+
   return `import React from 'react';
   import {
-    // Form fields
-    TextInput,
-    NumberInput,
-    PasswordInput,
-    Checkbox,
-    Select,
-    Textarea,
-    Button,
-  
-    // Layouts
-    Group,
-    Stack,
-    SimpleGrid,
-    Card,
-  
-    // Typography
-    Text,
-    Title,
+    ${importMantineCore.join(',')}
   } from '@mantine/core';
-  import { useForm, isNotEmpty, isEmail, isInRange } from '@mantine/form';
+  import {
+    ${importMantineForm.join(',')}
+  } from '@mantine/form';
 
 `;
 };
@@ -92,6 +92,7 @@ const genComponentCode = (
   allItems: DNDTreeFormFieldItem[],
   children: string,
 ): string => {
+  // Extract all form initial values code
   const initialValues = allItems
     .filter((items) => {
       return items.data?.name && items.data?.type !== 'Button';
@@ -101,6 +102,7 @@ const genComponentCode = (
     })
     .join('\n');
 
+  // Extract all form validate code
   const validate = allItems
     .filter((items) => {
       return items.data?.name && items.data?.type !== 'Button';
